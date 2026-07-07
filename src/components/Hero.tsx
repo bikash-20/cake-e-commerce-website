@@ -19,9 +19,9 @@ export default function Hero() {
     <section
       ref={ref}
       id="home"
-      className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-nightfall text-cream"
+      className="relative isolate flex flex-col overflow-hidden bg-nightfall text-cream md:flex md:min-h-[100svh] md:items-end"
     >
-      {/* background image — full bleed */}
+      {/* background image — full bleed (covers the whole section incl. mobile flow) */}
       <motion.div style={{ scale: imgScale, y }} className="absolute inset-0 -z-10">
         <img
           src={heroImage}
@@ -38,7 +38,10 @@ export default function Hero() {
       {/* editorial hairline at top removed — was duplicating navbar branding
           and overlapping the nav links. Navbar now sits cleanly on its own. */}
 
-      <div className="relative mx-auto w-full max-w-editorial px-6 pb-28 pt-32 md:px-12 md:pb-36 md:pt-44">
+      {/* Top spacer so the eyebrow doesn't sit under the fixed navbar on mobile */}
+      <div className="h-20 md:hidden" aria-hidden />
+
+      <div className="relative mx-auto w-full max-w-editorial px-6 pb-12 pt-4 md:px-12 md:pb-36 md:pt-44">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,14 +95,14 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* 3-column feature strip at bottom of hero */}
+      {/* 3-column feature strip — in flow on mobile, absolute overlay on desktop */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute inset-x-0 bottom-0 z-10 border-t border-cream/15 bg-nightfall/30 backdrop-blur-[1px]"
+        className="relative z-10 mt-12 border-t border-cream/15 bg-nightfall/40 backdrop-blur-[1px] md:absolute md:inset-x-0 md:bottom-0 md:mt-0"
       >
-        <div className="mx-auto grid max-w-editorial grid-cols-1 divide-cream/15 md:grid-cols-3 md:divide-x">
+        <div className="mx-auto grid max-w-editorial grid-cols-1 divide-y divide-cream/15 md:grid-cols-3 md:divide-x md:divide-y-0">
           {[
             { t: 'Bridal Cakes', d: 'Elegant designs for engagements and weddings.' },
             { t: 'Birthday Cakes', d: 'Custom flavors and toppers for every age.' },
@@ -107,7 +110,7 @@ export default function Hero() {
           ].map((f, i) => (
             <div
               key={f.t}
-              className={`flex flex-col gap-2 px-6 py-6 md:py-7 ${i > 0 ? 'md:px-10' : 'md:px-10'}`}
+              className="flex flex-col gap-2 px-6 py-6 md:px-10 md:py-7"
             >
               <span className="text-[10px] uppercase tracking-eyebrow text-cream/55">
                 0{i + 1} · Collection
