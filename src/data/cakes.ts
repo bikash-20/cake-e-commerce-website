@@ -45,6 +45,9 @@ import anniversary04 from '../assets/cakes/anniversary/04-chapter-25-milestone.j
 import anniversary05 from '../assets/cakes/anniversary/05-ruby-rose-romance.webp';
 
 import diwali01 from '../assets/cakes/diwali/01-gold-truffle.jpg';
+import diwali02 from '../assets/cakes/diwali/02-gold-truffle-alt.png';
+import diwali03 from '../assets/cakes/diwali/03-gold-truffle-alt2.jpg';
+import diwali04 from '../assets/cakes/diwali/04-gold-truffle-alt3.webp';
 
 export const BIRTHDAY_ADDONS: AddOn[] = [
   { id: 'name', label: 'Custom name on cake', price: 0 },
@@ -270,6 +273,51 @@ export const CAKES: Cake[] = [
       { weight: '1', price: 1300 },
       { weight: '1.5', price: 1750 },
       { weight: '2', price: 2250 },
+    ],
+  },
+  {
+    id: 'diwali-gold-leaf-dome',
+    name: 'Diwali Gold Leaf Dome Cake',
+    description:
+      'Smooth chocolate ganache dome finished with hand-applied edible gold leaf and a halo of gold-dusted florals — a centrepiece for the festive table.',
+    category: 'diwali',
+    image: diwali02,
+    weights: [
+      { weight: '1', price: 1450 },
+      { weight: '1.5', price: 1950 },
+      { weight: '2', price: 2500 },
+    ],
+  },
+  {
+    id: 'diwali-sparkler-round',
+    name: 'Diwali Sparkler Round Cake',
+    description:
+      'Round dark chocolate cake topped with a burst of gold sparklers, chocolate shards, and a personalised festive message on a gold plaque.',
+    category: 'diwali',
+    image: diwali03,
+    weights: [
+      { weight: '1', price: 1350 },
+      { weight: '1.5', price: 1800 },
+      { weight: '2', price: 2350 },
+    ],
+    addons: [
+      { id: 'name', label: 'Custom name on cake', price: 0 },
+      { id: 'photo', label: 'Photo / edible print topper', price: 150 },
+      { id: 'acrylic', label: 'Acrylic topper', price: 120 },
+      { id: 'sparklers', label: 'Gold sparkler topper set', price: 200 },
+    ],
+  },
+  {
+    id: 'diwali-rangoli-hearts',
+    name: 'Diwali Rangoli Hearts Cake',
+    description:
+      'Ivory fondant cake hand-painted with a gold rangoli motif, ruby accents, and a heart of sugar florals — sweet, festive, and shareable.',
+    category: 'diwali',
+    image: diwali04,
+    weights: [
+      { weight: '1', price: 1500 },
+      { weight: '1.5', price: 2000 },
+      { weight: '2', price: 2600 },
     ],
   },
 ];
