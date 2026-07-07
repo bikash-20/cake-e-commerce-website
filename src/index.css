@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --cream: #F4EFE9;
+    --ink: #2A2622;
+    --muted: #6E6559;
+    --burgundy: #7A2331;
+    --gold: #B8934C;
+    --surface: #EFE7DD;
+    --divider: #D8CFC1;
+    --nightfall: #211D19;
+  }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--burgundy);
+    color: var(--cream);
+  }
+
+  /* Hide native cursor on devices with fine pointer */
+  @media (pointer: fine) {
+    html.has-custom-cursor,
+    html.has-custom-cursor * {
+      cursor: none !important;
+    }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-sans uppercase text-[11px] tracking-eyebrow text-muted;
+  }
+  .display {
+    @apply font-serif text-ink leading-[1.02];
+  }
+  .italic-accent {
+    @apply italic font-serif text-burgundy;
+  }
+
+  .editorial-rule {
+    @apply h-px w-full bg-divider;
+  }
+
+  /* Embla carousel base */
+  .embla {
+    @apply overflow-hidden;
+  }
+  .embla__container {
+    @apply flex gap-6;
+  }
+  .embla__slide {
+    @apply flex-[0_0_auto];
+  }
+}
+
+@layer utilities {
+  .grain-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.08;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.15 0 0 0 0 0.13 0 0 0 0.7 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .grain-overlay--soft {
+    opacity: 0.05;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
