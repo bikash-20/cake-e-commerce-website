@@ -35,13 +35,8 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* editorial hairline at top */}
-      <div className="pointer-events-none absolute inset-x-0 top-16 z-10 mx-auto max-w-editorial px-6 md:px-12">
-        <div className="flex items-center justify-between text-[10px] uppercase tracking-eyebrow text-cream/70">
-          <span>Sugar & Sylhet · {BRAND.eyebrow}</span>
-          <span className="hidden md:inline">Atelier · est. Sylhet</span>
-        </div>
-      </div>
+      {/* editorial hairline at top removed — was duplicating navbar branding
+          and overlapping the nav links. Navbar now sits cleanly on its own. */}
 
       <div className="relative mx-auto w-full max-w-editorial px-6 pb-28 pt-32 md:px-12 md:pb-36 md:pt-44">
         <motion.p
