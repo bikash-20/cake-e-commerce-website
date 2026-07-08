@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLenis } from './hooks/useLenis';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import CollectionsTeaser from './components/CollectionsTeaser';
 import CategorySection from './components/CategorySection';
 import CakeCarousel from './components/CakeCarousel';
 import HowItWorks from './components/HowItWorks';
@@ -64,6 +65,11 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+
+        {/* Studio Atelier–style 3-card teaser row.
+            Lives on the cream background so it never overlaps the hero
+            copy or the WhatsApp FAB on mobile. */}
+        <CollectionsTeaser />
 
         <CategorySection
           id="bridal"

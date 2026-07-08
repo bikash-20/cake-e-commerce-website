@@ -12,7 +12,7 @@ export default function WhatsAppFAB() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -2 }}
-      className="group fixed bottom-6 right-6 z-30 flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-sm font-medium text-white shadow-[0_18px_30px_-15px_rgba(37,211,102,0.7)] transition-shadow hover:shadow-[0_22px_40px_-15px_rgba(37,211,102,0.85)]"
+      className="group fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-5 z-30 flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-sm font-medium text-white shadow-[0_18px_30px_-15px_rgba(37,211,102,0.7)] transition-shadow hover:shadow-[0_22px_40px_-15px_rgba(37,211,102,0.85)] sm:bottom-6 sm:right-6"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
