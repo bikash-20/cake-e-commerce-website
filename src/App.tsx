@@ -42,15 +42,18 @@ export default function App() {
       for (const s of sections) {
         if (s.offsetTop <= probe) current = s.id;
       }
+      // Respect the navbar's current theme: cream-tinted over the hero,
+      // ink-tinted over cream sections. Active link inherits the
+      // stronger color of whichever theme the bar is currently using.
+      const header = document.querySelector<HTMLElement>('header[data-nav-theme]');
+      const theme = header?.dataset.navTheme ?? 'light';
+      const idleCls = theme === 'dark' ? 'text-cream/85' : 'text-ink/80';
+      const activeCls = theme === 'dark' ? 'text-cream' : 'text-ink';
       document.querySelectorAll<HTMLAnchorElement>('header nav a[href^="#"]').forEach((a) => {
         const target = a.getAttribute('href')?.replace('#', '');
-        if (target && target === current) {
-          a.classList.add('text-ink');
-          a.classList.remove('text-ink/80');
-        } else {
-          a.classList.remove('text-ink');
-          a.classList.add('text-ink/80');
-        }
+        const isActive = !!target && target === current;
+        a.classList.toggle(activeCls, isActive);
+        a.classList.toggle(idleCls, !isActive);
       });
     };
     onScroll();

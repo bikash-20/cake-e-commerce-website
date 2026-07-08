@@ -15,6 +15,15 @@ const NAV_LINKS = [
   { href: '#contact', label: 'Contact' },
 ];
 
+/**
+ * Transparent navbar that overlays the hero.
+ * - Over the hero (top of page): fully transparent, light text/icons so
+ *   the cake image is visible behind it.
+ * - After scrolling past the hero: fades to a soft cream tint with dark
+ *   text so links stay readable on the cream site background.
+ * - Mobile drawer remains a solid cream panel below the bar (it's an
+ *   overlay sheet, not part of the bar itself).
+ */
 export default function Navbar() {
   const { itemCount, openCart } = useCart();
   const [scrolled, setScrolled] = useState(false);
@@ -37,29 +46,59 @@ export default function Navbar() {
     };
   }, [mobileOpen]);
 
+  // Theme tokens driven by the same `scrolled` state so we never have
+  // to recompute on every render.
+  const overHero = !scrolled;
+  const navBg = overHero
+    ? 'rgba(0,0,0,0)' // transparent over hero
+    : 'rgba(244,239,233,0.92)'; // faint cream tint once past hero
+  const navShadow = overHero
+    ? '0 0 0 0 rgba(0,0,0,0)'
+    : '0 1px 0 0 rgba(184,147,76,0.18), 0 8px 24px -16px rgba(42,38,34,0.18)';
+  const navBlur = overHero ? 'blur(0px)' : 'blur(10px)';
+
+  const linkBase =
+    'group relative text-[13px] font-medium transition-colors duration-300';
+  const linkIdle = overHero ? 'text-cream/85 hover:text-cream' : 'text-ink/80 hover:text-ink';
+  const linkActive = overHero ? 'text-cream' : 'text-ink';
+  const linkUnderline = overHero ? 'bg-cream' : 'bg-ink';
+
+  const cartBtn =
+    'relative flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-300 ' +
+    (overHero
+      ? 'border border-cream/40 text-cream hover:border-cream hover:bg-cream/10'
+      : 'border border-divider text-ink hover:border-ink');
+  const mobileBtn =
+    'flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-300 ' +
+    (overHero
+      ? 'border border-cream/40 text-cream hover:border-cream'
+      : 'border border-divider text-ink');
+
   return (
     <motion.header
       initial={false}
-      animate={{
-        // Fully opaque cream so the hero never bleeds through at y=0
-        // (previously 0.92 → 0.96, which let the dark cake photo show as
-        // a thin band above the navbar on desktop).
-        backgroundColor: 'rgba(244,239,233,1)',
-        boxShadow: scrolled
-          ? '0 1px 0 0 rgba(184,147,76,0.18), 0 8px 24px -16px rgba(42,38,34,0.18)'
-          : '0 0 0 0 rgba(0,0,0,0)',
-        backdropFilter: 'blur(0px)',
-      }}
+      animate={{ backgroundColor: navBg, boxShadow: navShadow, backdropFilter: navBlur }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      data-nav-theme={overHero ? 'dark' : 'light'}
       className="fixed inset-x-0 top-0 z-40 border-0"
     >
       <div className="mx-auto flex h-16 max-w-editorial items-center justify-between px-6 md:h-20 md:px-12">
-        {/* Logo */}
-        <a href="#home" className="group flex items-baseline gap-3 text-ink no-underline">
-          <span className="font-serif text-[22px] font-semibold leading-none text-ink md:text-[28px]">
+        {/* Logo — cream over hero, ink once scrolled */}
+        <a href="#home" className="group flex items-baseline gap-3 no-underline">
+          <span
+            className={
+              'font-serif text-[22px] font-semibold leading-none transition-colors duration-300 md:text-[28px] ' +
+              (overHero ? 'text-cream' : 'text-ink')
+            }
+          >
             {BRAND.name}
           </span>
-          <span className="hidden text-[10px] font-semibold uppercase tracking-eyebrow text-burgundy md:inline">
+          <span
+            className={
+              'hidden text-[10px] font-semibold uppercase tracking-eyebrow transition-colors duration-300 md:inline ' +
+              (overHero ? 'text-cream/70' : 'text-burgundy')
+            }
+          >
             {BRAND.eyebrow}
           </span>
         </a>
@@ -71,15 +110,21 @@ export default function Navbar() {
               <a
                 key={l.href}
                 href={l.href}
-                className="group relative text-[13px] font-medium text-ink/80 transition-colors hover:text-ink"
+                data-nav-link
+                data-nav-theme={overHero ? 'dark' : 'light'}
+                className={`${linkBase} ${linkIdle}`}
               >
                 {l.label}
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-ink transition-all duration-300 group-hover:w-full" />
+                <span
+                  className={`absolute -bottom-1 left-0 h-px w-0 transition-all duration-300 group-hover:w-full ${linkUnderline}`}
+                />
               </a>
             ))}
             <a
               href="#contact"
-              className="text-[13px] font-medium text-ink/80 transition-colors hover:text-ink"
+              data-nav-link
+              data-nav-theme={overHero ? 'dark' : 'light'}
+              className={`${linkBase} ${linkIdle}`}
             >
               Contact
             </a>
@@ -92,7 +137,8 @@ export default function Navbar() {
             type="button"
             onClick={openCart}
             aria-label="Open cart"
-            className="relative flex h-10 w-10 items-center justify-center rounded-full border border-divider text-ink transition-colors hover:border-ink"
+            data-nav-theme={overHero ? 'dark' : 'light'}
+            className={cartBtn}
             data-cursor="order"
           >
             <ShoppingBag size={16} strokeWidth={1.5} />
@@ -117,7 +163,13 @@ export default function Navbar() {
               href={`https://wa.me/${BRAND.whatsappE164}`}
               target="_blank"
               rel="noreferrer"
-              className="items-center justify-center gap-2 rounded-full bg-ink px-5 py-2.5 text-[13px] font-medium text-cream transition-colors hover:bg-burgundy"
+              data-nav-theme={overHero ? 'dark' : 'light'}
+              className={
+                'items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-medium transition-colors duration-300 ' +
+                (overHero
+                  ? 'border border-cream/40 text-cream hover:border-cream hover:bg-cream/10'
+                  : 'bg-ink text-cream hover:bg-burgundy')
+              }
             >
               Order Now
             </MagneticButton>
@@ -128,7 +180,8 @@ export default function Navbar() {
               type="button"
               onClick={() => setMobileOpen((v) => !v)}
               aria-label="Toggle menu"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-divider text-ink"
+              data-nav-theme={overHero ? 'dark' : 'light'}
+              className={mobileBtn}
             >
               {mobileOpen ? <X size={16} /> : <Menu size={16} />}
             </button>
@@ -136,7 +189,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer — solid cream panel, sits below the transparent bar. */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div

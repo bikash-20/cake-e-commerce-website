@@ -9,6 +9,9 @@ import heroImage from '../assets/cakes/birthday/alt-cake-12b.webp';
  * - Full-bleed cake photo with a SOFT top-to-bottom gradient + soft
  *   radial vignette (no flat black wash). The image stays visible —
  *   we only darken the corners/edges to seat the headline.
+ * - The TOP of the gradient is intentionally a touch heavier than the
+ *   center so the transparent navbar (which overlays the photo) has a
+ *   soft dark wash to sit on, never a flat bar.
  * - Centered editorial copy: eyebrow → headline → subtext → CTAs, with
  *   generous, airy vertical rhythm on both mobile and desktop
  *   (Studio Atelier's "Interior Design For Modern Living" feel).
@@ -52,14 +55,15 @@ export default function Hero() {
       </motion.div>
 
       {/* Soft gradient overlay — not a flat dark layer.
-          - Top: medium-dark (sits behind the fixed opaque navbar, never seen)
+          - Top: heavier dark wash (gives the transparent navbar a soft
+            seat without becoming a flat bar)
           - Center: lightest (lets the cake read naturally)
           - Bottom: medium-dark (seats the CTAs and fades into the next section)
           This mimics Studio Atelier's natural lighting / window shadow rather
           than a heavy uniform scrim. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-nightfall/55 via-nightfall/15 to-nightfall/55"
+        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-nightfall/70 via-nightfall/15 to-nightfall/55"
       />
       {/* Soft corner vignette — adds depth without a flat dark wash */}
       <div
@@ -68,7 +72,8 @@ export default function Hero() {
       />
 
       {/* Centered editorial copy.
-          - Top padding accounts for the fixed opaque navbar (h-16 / h-20).
+          - Top padding leaves room for the floating navbar (h-16 / h-20)
+            without the headline ever sitting under it.
           - Generous vertical rhythm between eyebrow → headline → subtext →
             CTAs to match Studio Atelier's airy editorial spacing.
           - Bottom safe-area lifts the buttons away from the viewport edge
