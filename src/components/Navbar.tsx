@@ -41,14 +41,17 @@ export default function Navbar() {
     <motion.header
       initial={false}
       animate={{
-        backgroundColor: scrolled ? 'rgba(244,239,233,0.96)' : 'rgba(244,239,233,0.92)',
+        // Fully opaque cream so the hero never bleeds through at y=0
+        // (previously 0.92 → 0.96, which let the dark cake photo show as
+        // a thin band above the navbar on desktop).
+        backgroundColor: 'rgba(244,239,233,1)',
         boxShadow: scrolled
           ? '0 1px 0 0 rgba(184,147,76,0.18), 0 8px 24px -16px rgba(42,38,34,0.18)'
           : '0 0 0 0 rgba(0,0,0,0)',
-        backdropFilter: scrolled ? 'blur(10px)' : 'blur(6px)',
+        backdropFilter: 'blur(0px)',
       }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-40"
+      className="fixed inset-x-0 top-0 z-40 border-0"
     >
       <div className="mx-auto flex h-16 max-w-editorial items-center justify-between px-6 md:h-20 md:px-12">
         {/* Logo */}
