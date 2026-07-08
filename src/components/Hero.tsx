@@ -94,7 +94,7 @@ export default function Hero() {
           transition={{ duration: 1.0, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="display mx-auto mt-10 max-w-4xl text-balance font-serif text-[44px] leading-[1.08] tracking-[-0.01em] text-cream sm:text-[64px] sm:leading-[1.06] md:mt-14 md:text-[88px] md:leading-[1.05] md:tracking-[-0.015em] lg:text-[104px] lg:leading-[1.04]"
         >
-          Cakes Crafted for Your <span className="italic-accent">Sweetest</span>{' '}
+          Cakes Crafted for Your <span className="italic-accent text-[#E89AAA] [text-shadow:_0_1px_18px_rgba(232,154,170,0.35)]">Sweetest</span>{' '}
           Moments
         </motion.h1>
 
