@@ -27,14 +27,6 @@
     background: var(--burgundy);
     color: var(--cream);
   }
-
-  /* Hide native cursor on devices with fine pointer */
-  @media (pointer: fine) {
-    html.has-custom-cursor,
-    html.has-custom-cursor * {
-      cursor: none !important;
-    }
-  }
 }
 
 @layer components {

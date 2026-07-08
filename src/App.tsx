@@ -12,7 +12,6 @@ import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import WhatsAppFAB from './components/WhatsAppFAB';
 import ScrollToTop from './components/ScrollToTop';
-import CustomCursor from './components/CustomCursor';
 import GrainOverlay from './components/GrainOverlay';
 import { cakesByCategory } from './data/cakes';
 
@@ -64,7 +63,6 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-cream text-ink">
       <GrainOverlay />
-      <CustomCursor />
       <Navbar />
       <main>
         <Hero />
