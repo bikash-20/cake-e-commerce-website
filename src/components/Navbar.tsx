@@ -42,11 +42,13 @@ export default function Navbar() {
       initial={false}
       animate={{
         backgroundColor: scrolled ? 'rgba(244,239,233,0.96)' : 'rgba(244,239,233,0.92)',
-        borderColor: scrolled ? 'rgba(216,207,193,0.7)' : 'rgba(216,207,193,0.0)',
+        boxShadow: scrolled
+          ? '0 1px 0 0 rgba(184,147,76,0.18), 0 8px 24px -16px rgba(42,38,34,0.18)'
+          : '0 0 0 0 rgba(0,0,0,0)',
         backdropFilter: scrolled ? 'blur(10px)' : 'blur(6px)',
       }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-40 border-b"
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-x-0 top-0 z-40"
     >
       <div className="mx-auto flex h-16 max-w-editorial items-center justify-between px-6 md:h-20 md:px-12">
         {/* Logo */}
