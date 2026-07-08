@@ -14,10 +14,7 @@ export default function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 120]);
   const imgScale = useTransform(scrollYProgress, [0, 1], [1.05, reduce ? 1.05 : 1.18]);
   const overlay = useTransform(scrollYProgress, [0, 1], [0.42, reduce ? 0.42 : 0.58]);
-  // Feature-strip border opacity: visible at top of hero, fades out as it scrolls away.
-  const borderOpacity = useTransform(scrollYProgress, [0, 0.35, 1], [1, 0.35, 0]);
-  // Subtle whole-strip opacity to soften the transition as the hero leaves view.
-  const stripOpacity = useTransform(scrollYProgress, [0, 0.7, 1], [1, 0.85, 0]);
+  // Feature strip is now fully static — no scroll-driven fade.
 
   return (
     <section
@@ -110,47 +107,63 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* 3-column feature strip — in flow on mobile, absolute overlay on desktop.
-          The hard top border was removed; the divider rule + strip opacity now
-          fade out as the hero scrolls away, so it doesn't read as a stale UI
-          chrome line once you're past the section. */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        style={{ opacity: stripOpacity }}
-        className="relative z-10 mt-12 bg-nightfall/35 backdrop-blur-[1px] md:absolute md:inset-x-0 md:bottom-0 md:mt-0"
+      {/* Static 3-card feature strip — in flow on mobile, absolute overlay on desktop.
+          No top hairline, no inter-card dividers: reads as floating cards on the hero. */}
+      <div
+        className="relative z-10 mt-12 px-6 pb-6 md:absolute md:inset-x-0 md:bottom-0 md:mt-0 md:px-12 md:pb-10"
       >
-        {/* Scroll-fading hairline — replaces the static `border-t border-cream/15` */}
-        <motion.div
-          aria-hidden
-          style={{ opacity: borderOpacity }}
-          className="h-px w-full bg-cream/15"
-        />
-        <div className="mx-auto grid max-w-editorial grid-cols-1 md:grid-cols-3">
+        <div className="mx-auto grid max-w-editorial grid-cols-1 gap-3 md:grid-cols-3 md:gap-4">
           {[
-            { t: 'Bridal Cakes', d: 'Elegant designs for engagements and weddings.' },
-            { t: 'Birthday Cakes', d: 'Custom flavors and toppers for every age.' },
-            { t: 'Anniversary Cakes', d: 'Timeless designs to celebrate love that lasts.' },
-          ].map((f, i, arr) => (
-            <div key={f.t} className="relative flex flex-col gap-2 px-6 py-6 md:px-10 md:py-7">
-              {/* Soft fading divider between cards — also tied to scroll */}
-              {i < arr.length - 1 && (
-                <motion.span
-                  aria-hidden
-                  style={{ opacity: borderOpacity }}
-                  className="pointer-events-none absolute inset-y-4 right-0 w-px bg-cream/15 md:inset-y-6 md:left-auto"
-                />
-              )}
-              <span className="text-[10px] uppercase tracking-eyebrow text-cream/55">
-                0{i + 1} · Collection
+            {
+              t: 'Bridal Cakes',
+              d: 'Elegant designs for engagements and weddings.',
+              icon: (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+                  <path d="M12 3l1.6 3.2L17 7l-3 2.6.9 3.7L12 11.4 9.1 13.3l.9-3.7L7 7l3.4-.8L12 3z" />
+                  <path d="M5 16h14v3a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-3z" />
+                  <path d="M7 16v-2a5 5 0 0 1 10 0v2" />
+                </svg>
+              ),
+            },
+            {
+              t: 'Birthday Cakes',
+              d: 'Custom flavors and toppers for every age.',
+              icon: (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+                  <path d="M4 21h16" />
+                  <path d="M5 21V11h14v10" />
+                  <path d="M5 11l3-5h8l3 5" />
+                  <path d="M12 6V3" />
+                  <path d="M12 3c-1 1.2-1 2 0 3 1-1 1-1.8 0-3z" />
+                </svg>
+              ),
+            },
+            {
+              t: 'Anniversary Cakes',
+              d: 'Timeless designs to celebrate love that lasts.',
+              icon: (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+                  <path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 5.65-7 10-7 10z" />
+                </svg>
+              ),
+            },
+          ].map((f) => (
+            <div
+              key={f.t}
+              className="flex flex-col gap-2 rounded-xl border border-cream/15 bg-nightfall/55 px-5 py-5 backdrop-blur-sm md:px-6 md:py-6"
+            >
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/25 text-cream/85">
+                {f.icon}
+              </span>
+              <span className="mt-1 text-[10px] uppercase tracking-eyebrow text-cream/55">
+                Collection
               </span>
               <p className="font-serif text-xl text-cream md:text-2xl">{f.t}</p>
               <p className="text-sm text-cream/70">{f.d}</p>
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
