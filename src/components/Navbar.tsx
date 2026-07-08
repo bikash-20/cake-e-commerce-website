@@ -41,20 +41,20 @@ export default function Navbar() {
     <motion.header
       initial={false}
       animate={{
-        backgroundColor: scrolled ? 'rgba(244,239,233,0.86)' : 'rgba(244,239,233,0.0)',
+        backgroundColor: scrolled ? 'rgba(244,239,233,0.96)' : 'rgba(244,239,233,0.92)',
         borderColor: scrolled ? 'rgba(216,207,193,0.7)' : 'rgba(216,207,193,0.0)',
-        backdropFilter: scrolled ? 'blur(8px)' : 'blur(0px)',
+        backdropFilter: scrolled ? 'blur(10px)' : 'blur(6px)',
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="fixed inset-x-0 top-0 z-40 border-b"
     >
       <div className="mx-auto flex h-16 max-w-editorial items-center justify-between px-6 md:h-20 md:px-12">
         {/* Logo */}
-        <a href="#home" className="group flex items-baseline gap-2 text-ink no-underline">
-          <span className="font-serif text-2xl leading-none md:text-[26px]">
+        <a href="#home" className="group flex items-baseline gap-3 text-ink no-underline">
+          <span className="font-serif text-[22px] font-semibold leading-none text-ink md:text-[28px]">
             {BRAND.name}
           </span>
-          <span className="hidden text-[10px] uppercase tracking-eyebrow text-muted md:inline">
+          <span className="hidden text-[10px] font-semibold uppercase tracking-eyebrow text-burgundy md:inline">
             {BRAND.eyebrow}
           </span>
         </a>

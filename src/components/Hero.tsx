@@ -13,7 +13,7 @@ export default function Hero() {
   });
   const y = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 120]);
   const imgScale = useTransform(scrollYProgress, [0, 1], [1.05, reduce ? 1.05 : 1.18]);
-  const overlay = useTransform(scrollYProgress, [0, 1], [0.45, reduce ? 0.45 : 0.62]);
+  const overlay = useTransform(scrollYProgress, [0, 1], [0.58, reduce ? 0.58 : 0.72]);
 
   return (
     <section
@@ -42,6 +42,11 @@ export default function Hero() {
       <div className="h-20 md:hidden" aria-hidden />
 
       <div className="relative mx-auto w-full max-w-editorial px-6 pb-12 pt-4 md:px-12 md:pb-36 md:pt-44">
+        {/* Local contrast scrim — strengthens readability of subtitle + CTAs */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-[1] bg-gradient-to-t from-nightfall/85 via-nightfall/45 to-transparent md:from-nightfall/90 md:via-nightfall/55"
+        />
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
