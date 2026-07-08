@@ -1,4 +1,6 @@
 # Sugar & Sylhet — Artisan Cake Studio
+<img width="1280" height="716" alt="image" src="https://github.com/user-attachments/assets/3d6b98e2-ef81-487c-b607-018589f81ee8" />
+https://cake-e-commerce-website-henna.vercel.app/
 
 A modern, editorial-style single-page site for a home-based premium cake studio in **Sylhet, Bangladesh**. Built with React + Vite + TypeScript, Tailwind CSS, Framer Motion, Lenis (smooth scroll), and Embla Carousel.
 
