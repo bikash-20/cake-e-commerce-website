@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://cloud-camp-hackathon.vercel.app/sitemap.xml
+Sitemap: https://cake-e-commerce-website-henna.vercel.app/sitemap.xml
