@@ -1,7 +1,7 @@
 import SectionReveal from './SectionReveal';
 import MagneticButton from './MagneticButton';
 import { BRAND } from '../data/cakes';
-import { Mail, Phone, MapPin, Instagram, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Linkedin, Facebook } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -81,7 +81,7 @@ export default function Footer() {
               {BRAND.eyebrow}
             </p>
           </div>
-          <div className="flex flex-wrap gap-6 md:col-span-4 md:justify-end">
+          <div className="flex flex-wrap gap-5 md:col-span-4 md:justify-end">
             <a
               href={BRAND.instagram}
               target="_blank"
@@ -89,6 +89,14 @@ export default function Footer() {
               className="inline-flex items-center gap-2 text-sm text-cream/70 hover:text-cream transition-colors"
             >
               <Instagram size={14} className="text-gold" /> {BRAND.instagramHandle}
+            </a>
+            <a
+              href={BRAND.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-cream/70 hover:text-cream transition-colors"
+            >
+              <Facebook size={14} /> Facebook
             </a>
             <a
               href={BRAND.credit.linkedin}

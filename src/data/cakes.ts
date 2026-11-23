@@ -343,9 +343,11 @@ export const BRAND = {
   location: 'Sylhet, Bangladesh',
   instagram: 'https://www.instagram.com/nt__delights?bqrl=MWM1ZW5nYW85MG42OQ==',
   instagramHandle: '@nt__delights',
+  facebook: 'https://www.facebook.com/profile.php?id=61577923653790',
   credit: {
     name: 'Engineer Bikash Talukder',
     linkedin: 'https://www.linkedin.com/in/bikash-talukder-6497633b8/',
     instagram: 'https://www.instagram.com/talukder_20/',
+    facebook: 'https://www.facebook.com/profile.php?id=61577923653790',
   },
 } as const;
