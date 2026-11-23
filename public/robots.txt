@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://sugarandsylhet.com/sitemap.xml
+Sitemap: https://cloud-camp-hackathon.vercel.app/sitemap.xml
