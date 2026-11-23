@@ -11,7 +11,6 @@ import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import WhatsAppFAB from './components/WhatsAppFAB';
-import InstagramWidget from './components/InstagramWidget';
 import AIAssistant from './components/AIAssistant';
 import ScrollToTop from './components/ScrollToTop';
 import GrainOverlay from './components/GrainOverlay';
@@ -143,7 +142,6 @@ export default function App() {
       <CartDrawer />
       <WhatsAppFAB />
       <AIAssistant />
-      <InstagramWidget />
       <ScrollToTop />
     </div>
   );

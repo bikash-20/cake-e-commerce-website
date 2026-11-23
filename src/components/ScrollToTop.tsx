@@ -29,7 +29,7 @@ export default function ScrollToTop() {
                 : 'smooth',
             })
           }
-          className="fixed bottom-[4.5rem] left-5 sm:left-6 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-divider bg-cream/90 text-ink backdrop-blur shadow-sm transition-colors hover:border-ink"
+          className="fixed bottom-6 left-6 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-divider bg-cream/90 text-ink backdrop-blur shadow-sm transition-colors hover:border-ink"
         >
           <ArrowUp size={16} strokeWidth={1.5} />
         </motion.button>
