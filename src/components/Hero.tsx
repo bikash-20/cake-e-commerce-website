@@ -2,27 +2,19 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import { useRef } from 'react';
 import MagneticButton from './MagneticButton';
 import { BRAND } from '../data/cakes';
+import { useLanguage } from '../context/LanguageContext';
 import heroImage from '../assets/cakes/birthday/alt-cake-12b.webp';
 
 /**
  * Studio Atelier–style hero.
  * - Full-bleed cake photo with a SOFT top-to-bottom gradient + soft
- *   radial vignette (no flat black wash). The image stays visible —
- *   we only darken the corners/edges to seat the headline.
- * - The TOP of the gradient is intentionally a touch heavier than the
- *   center so the transparent navbar (which overlays the photo) has a
- *   soft dark wash to sit on, never a flat bar.
- * - Centered editorial copy: eyebrow → headline → subtext → CTAs, with
- *   generous, airy vertical rhythm on both mobile and desktop
- *   (Studio Atelier's "Interior Design For Modern Living" feel).
- * - The "Collection" teaser row is intentionally NOT inside this section
- *   — it lives in its own <CollectionsTeaser /> component rendered in
- *   App.tsx right below the hero, so nothing overlaps the headline or
- *   fights the cake image.
+ *   radial vignette (no flat black wash).
+ * - Centered editorial copy: eyebrow → headline → subtext → CTAs.
  */
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const { t, isBn } = useLanguage();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -54,30 +46,18 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* Soft gradient overlay — not a flat dark layer.
-          - Top: heavier dark wash (gives the transparent navbar a soft
-            seat without becoming a flat bar)
-          - Center: lightest (lets the cake read naturally)
-          - Bottom: medium-dark (seats the CTAs and fades into the next section)
-          This mimics Studio Atelier's natural lighting / window shadow rather
-          than a heavy uniform scrim. */}
+      {/* Soft gradient overlay */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-nightfall/70 via-nightfall/15 to-nightfall/55"
       />
-      {/* Soft corner vignette — adds depth without a flat dark wash */}
+      {/* Soft corner vignette */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(20,16,12,0)_45%,rgba(20,16,12,0.35)_100%)]"
       />
 
-      {/* Centered editorial copy.
-          - Top padding leaves room for the floating navbar (h-16 / h-20)
-            without the headline ever sitting under it.
-          - Generous vertical rhythm between eyebrow → headline → subtext →
-            CTAs to match Studio Atelier's airy editorial spacing.
-          - Bottom safe-area lifts the buttons away from the viewport edge
-            and keeps the WhatsApp FAB from clipping copy. */}
+      {/* Centered editorial copy */}
       <div className="relative z-10 mx-auto flex w-full max-w-editorial flex-1 flex-col items-center justify-center px-6 pb-32 pt-32 text-center md:px-12 md:pb-40 md:pt-44 lg:pb-48 lg:pt-52">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
@@ -85,7 +65,7 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-[11px] uppercase tracking-eyebrow text-cream/80"
         >
-          Artisan Cakes, Made to Order
+          {t('heroEyebrow')}
         </motion.p>
 
         <motion.h1
@@ -94,8 +74,11 @@ export default function Hero() {
           transition={{ duration: 1.0, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="display mx-auto mt-10 max-w-4xl text-balance font-serif text-[44px] leading-[1.08] tracking-[-0.01em] text-cream sm:text-[64px] sm:leading-[1.06] md:mt-14 md:text-[88px] md:leading-[1.05] md:tracking-[-0.015em] lg:text-[104px] lg:leading-[1.04]"
         >
-          Cakes Crafted for Your <span className="italic-accent text-[#E89AAA] [text-shadow:_0_1px_18px_rgba(232,154,170,0.35)]">Sweetest</span>{' '}
-          Moments
+          {t('heroHeadingLine1')}{' '}
+          <span className="italic-accent text-[#E89AAA] [text-shadow:_0_1px_18px_rgba(232,154,170,0.35)]">
+            {isBn ? 'মিষ্টি মুহূর্তের' : 'Sweetest'}
+          </span>{' '}
+          {isBn ? 'অনবদ্য কেক' : 'Moments'}
         </motion.h1>
 
         <motion.p
@@ -104,8 +87,7 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto mt-12 max-w-xl text-base leading-[1.7] text-cream/85 md:mt-16 md:text-lg md:leading-[1.75]"
         >
-          Handmade bridal, birthday and anniversary cakes — baked fresh in Sylhet
-          and delivered with care to your doorstep.
+          {t('heroSubheading')}
         </motion.p>
 
         <motion.div
@@ -119,7 +101,7 @@ export default function Hero() {
             href="#bridal"
             className="items-center justify-center gap-2 rounded-full bg-cream px-9 py-[18px] text-[13px] font-medium uppercase tracking-[0.14em] text-ink transition-colors hover:bg-gold hover:text-cream"
           >
-            Explore Cakes <span aria-hidden>→</span>
+            {t('heroExploreMenu')} <span aria-hidden>→</span>
           </MagneticButton>
           <MagneticButton
             asLink
@@ -128,11 +110,11 @@ export default function Hero() {
             rel="noreferrer"
             className="items-center justify-center gap-2 rounded-full border border-cream/40 px-9 py-[18px] text-[13px] font-medium uppercase tracking-[0.14em] text-cream transition-colors hover:border-cream hover:bg-cream/10"
           >
-            Order via WhatsApp
+            {t('heroChatWhatsApp')}
           </MagneticButton>
         </motion.div>
 
-        {/* Bottom safe-area so the WhatsApp FAB never clips the hero copy. */}
+        {/* Bottom safe-area */}
         <div
           aria-hidden
           className="h-8 sm:h-6 md:h-8"

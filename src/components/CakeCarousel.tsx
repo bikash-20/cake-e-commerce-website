@@ -3,12 +3,14 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import CakeCard from './CakeCard';
 import type { Cake } from '../data/cakes';
+import { useLanguage } from '../context/LanguageContext';
 
 type Props = {
   cakes: Cake[];
 };
 
 export default function CakeCarousel({ cakes }: Props) {
+  const { isBn } = useLanguage();
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     dragFree: true,
@@ -49,7 +51,7 @@ export default function CakeCarousel({ cakes }: Props) {
 
       {/* arrow controls */}
       <div className="mx-6 mt-8 flex items-center justify-between md:mx-12">
-        <p className="eyebrow">Drag to explore</p>
+        <p className="eyebrow">{isBn ? 'ড্র্যাগ করে বাকি কেক দেখুন' : 'Drag to explore'}</p>
         <div className="flex gap-2">
           <button
             type="button"

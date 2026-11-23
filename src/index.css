@@ -27,6 +27,52 @@
     background: var(--burgundy);
     color: var(--cream);
   }
+
+  /* Bengali Typography support when language toggle is active */
+  html[lang="bn"],
+  body[data-lang="bn"],
+  .font-bn {
+    font-family: 'Hind Siliguri', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  html[lang="bn"] .font-serif,
+  body[data-lang="bn"] .font-serif,
+  .font-bn .font-serif,
+  html[lang="bn"] .display,
+  body[data-lang="bn"] .display,
+  .font-bn .display,
+  html[lang="bn"] h1,
+  html[lang="bn"] h2,
+  html[lang="bn"] h3,
+  html[lang="bn"] h4,
+  html[lang="bn"] h5,
+  html[lang="bn"] h6,
+  body[data-lang="bn"] h1,
+  body[data-lang="bn"] h2,
+  body[data-lang="bn"] h3,
+  body[data-lang="bn"] h4,
+  body[data-lang="bn"] h5,
+  body[data-lang="bn"] h6 {
+    font-family: 'Noto Serif Bengali', 'Cormorant Garamond', Georgia, serif !important;
+  }
+
+  html[lang="bn"] .italic-accent,
+  body[data-lang="bn"] .italic-accent,
+  .font-bn .italic-accent {
+    font-family: 'Noto Serif Bengali', serif !important;
+    font-style: normal;
+  }
+
+  html[lang="bn"] button,
+  html[lang="bn"] input,
+  html[lang="bn"] textarea,
+  html[lang="bn"] select,
+  body[data-lang="bn"] button,
+  body[data-lang="bn"] input,
+  body[data-lang="bn"] textarea,
+  body[data-lang="bn"] select {
+    font-family: 'Hind Siliguri', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
 }
 
 @layer components {

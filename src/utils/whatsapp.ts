@@ -11,11 +11,16 @@ export function buildOrderMessage(args: {
   deliveryFee: number;
   subtotal: number;
   total: number;
+  isBn?: boolean;
 }) {
-  const { items, note, delivery, deliveryFee, subtotal, total } = args;
+  const { items, note, delivery, deliveryFee, subtotal, total, isBn = false } = args;
   const lines: string[] = [];
 
-  lines.push(`Hello! I'd like to place an order from ${BRAND.name}:`);
+  if (isBn) {
+    lines.push(`হ্যালো! আমি ${BRAND.name} থেকে কেক অর্ডার করতে চাই:`);
+  } else {
+    lines.push(`Hello! I'd like to place an order from ${BRAND.name}:`);
+  }
   lines.push('');
 
   items.forEach((item, idx) => {
@@ -29,7 +34,7 @@ export function buildOrderMessage(args: {
     for (const id of item.addOnIds) {
       const addon: AddOn | undefined = cake.addons?.find((a) => a.id === id);
       if (addon) {
-        addOnLabels.push(addon.label);
+        addOnLabels.push(isBn && addon.labelBn ? addon.labelBn : addon.label);
         addOnTotal += addon.price;
       }
     }
@@ -37,25 +42,42 @@ export function buildOrderMessage(args: {
     const extras = addOnLabels.length ? ' + ' + addOnLabels.join(', ') : '';
     const unitPrice = w.price + addOnTotal;
     const qtyPrefix = item.quantity > 1 ? `${item.quantity}x ` : '';
+    const cakeName = isBn && cake.nameBn ? cake.nameBn : cake.name;
     lines.push(
-      `${idx + 1}. ${qtyPrefix}${cake.name} (${item.weight}kg)${extras} — ${formatBDT(
+      `${idx + 1}. ${qtyPrefix}${cakeName} (${item.weight}${isBn ? ' কেজি' : 'kg'})${extras} — ${formatBDT(
         unitPrice * item.quantity,
       )}`,
     );
   });
 
   lines.push('');
-  lines.push(`Subtotal: ${formatBDT(subtotal)}`);
+  lines.push(`${isBn ? 'সাবটোটাল' : 'Subtotal'}: ${formatBDT(subtotal)}`);
   lines.push(
-    `Delivery (${delivery === 'inside' ? 'Inside Sylhet' : 'Outside Sylhet'}): ${formatBDT(
-      deliveryFee,
-    )}`,
+    `${isBn ? 'ডেলিভারি চার্জ' : 'Delivery'} (${
+      delivery === 'inside'
+        ? isBn
+          ? 'সিলেট শহরের ভেতর'
+          : 'Inside Sylhet'
+        : isBn
+        ? 'সিলেট শহরের বাইরে'
+        : 'Outside Sylhet'
+    }): ${formatBDT(deliveryFee)}`,
   );
-  lines.push(`Total: ${formatBDT(total)}`);
+  lines.push(`${isBn ? 'সর্বমোট (আলোচনা সাপেক্ষ)' : 'Total (Negotiable)'}: ${formatBDT(total)}`);
   lines.push('');
-  lines.push(`Delivery Location: ${delivery === 'inside' ? 'Inside Sylhet' : 'Outside Sylhet'}`);
+  lines.push(
+    `${isBn ? 'ডেলিভারি এলাকা' : 'Delivery Location'}: ${
+      delivery === 'inside'
+        ? isBn
+          ? 'সিলেট শহরের ভেতর'
+          : 'Inside Sylhet'
+        : isBn
+        ? 'সিলেট শহরের বাইরে'
+        : 'Outside Sylhet'
+    }`,
+  );
   if (note.trim()) {
-    lines.push(`Note: ${note.trim()}`);
+    lines.push(`${isBn ? 'বার্তা / নির্দেশনা' : 'Note'}: ${note.trim()}`);
   }
 
   return lines.join('\n');

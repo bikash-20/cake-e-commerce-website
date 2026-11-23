@@ -2,11 +2,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Minus, Plus, Trash2, X } from 'lucide-react';
 import { useMemo } from 'react';
 import { useCart } from '../context/CartContext';
-import { findCake } from '../data/cakes';
+import { useLanguage } from '../context/LanguageContext';
+import { findCake, getCakeName } from '../data/cakes';
 import { buildOrderMessage, whatsappOrderLink } from '../utils/whatsapp';
 import { useMediaQuery } from '../hooks/useMedia';
-
-const formatBDT = (n: number) => `৳${n.toLocaleString('en-IN')}`;
 
 export default function CartDrawer() {
   const {
@@ -23,6 +22,7 @@ export default function CartDrawer() {
     setNote,
     setDelivery,
   } = useCart();
+  const { isBn, t, formatNumber, formatPrice } = useLanguage();
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const waLink = useMemo(() => {
@@ -34,9 +34,10 @@ export default function CartDrawer() {
       deliveryFee,
       subtotal,
       total,
+      isBn,
     });
     return whatsappOrderLink(message);
-  }, [items, note, delivery, deliveryFee, subtotal, total]);
+  }, [items, note, delivery, deliveryFee, subtotal, total, isBn]);
 
   return (
     <AnimatePresence>
@@ -65,13 +66,13 @@ export default function CartDrawer() {
                 ? 'fixed inset-x-0 bottom-0 top-16 z-[55] flex flex-col rounded-t-3xl bg-cream shadow-2xl'
                 : 'fixed right-0 top-0 z-[55] flex h-full w-full max-w-[480px] flex-col bg-cream shadow-2xl'
             }
-            aria-label="Cart"
+            aria-label={t('cartTitle')}
           >
             {/* header */}
             <div className="flex items-center justify-between border-b border-divider px-6 py-5 md:px-8">
               <div>
-                <p className="eyebrow">Your Order</p>
-                <h2 className="display text-2xl md:text-3xl">Cart</h2>
+                <p className="eyebrow">{t('cartTitle')}</p>
+                <h2 className="display text-2xl md:text-3xl">{t('navCart')}</h2>
               </div>
               <button
                 type="button"
@@ -87,9 +88,9 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto px-6 py-6 md:px-8">
               {items.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
-                  <p className="font-serif text-3xl text-ink">Nothing here yet</p>
+                  <p className="font-serif text-3xl text-ink">{t('cartEmptyTitle')}</p>
                   <p className="mt-2 max-w-xs text-sm text-muted">
-                    Pick a cake, choose a weight and we'll roll it into your cart.
+                    {t('cartEmptyDesc')}
                   </p>
                 </div>
               ) : (
@@ -104,32 +105,36 @@ export default function CartDrawer() {
                       return s + (a?.price ?? 0);
                     }, 0);
                     const unitPrice = w.price + addOnTotal;
+                    const cakeName = getCakeName(cake, isBn);
+
                     return (
                       <li key={item.lineId} className="flex gap-4">
                         <img
                           src={cake.image}
-                          alt={cake.name}
+                          alt={cakeName}
                           loading="lazy"
                           className="h-24 w-24 flex-shrink-0 rounded-xl object-cover"
                         />
                         <div className="min-w-0 flex-1">
                           <div className="flex items-start justify-between gap-3">
                             <div className="min-w-0">
-                              <p className="display text-lg leading-tight">{cake.name}</p>
+                              <p className="display text-lg leading-tight">{cakeName}</p>
                               <p className="mt-1 text-xs uppercase tracking-eyebrow text-muted">
-                                {item.weight}kg · {formatBDT(w.price)}
+                                {formatNumber(item.weight)}
+                                {isBn ? ' কেজি' : 'kg'} · {formatPrice(w.price)}
                               </p>
                               {item.addOnIds.length > 0 && (
                                 <ul className="mt-1 space-y-0.5 text-xs text-muted">
                                   {item.addOnIds.map((id) => {
                                     const a = cake.addons?.find((aa) => aa.id === id);
                                     if (!a) return null;
+                                    const addonLabel = isBn && a.labelBn ? a.labelBn : a.label;
                                     return (
                                       <li key={id} className="flex items-center gap-2">
                                         <span className="h-1 w-1 rounded-full bg-gold" />
-                                        {a.label}
+                                        {addonLabel}
                                         {a.price > 0 && (
-                                          <span className="text-muted/80">+{formatBDT(a.price)}</span>
+                                          <span className="text-muted/80">+{formatPrice(a.price)}</span>
                                         )}
                                       </li>
                                     );
@@ -140,7 +145,7 @@ export default function CartDrawer() {
                             <button
                               type="button"
                               onClick={() => removeItem(item.lineId)}
-                              aria-label={`Remove ${cake.name}`}
+                              aria-label={`Remove ${cakeName}`}
                               className="text-muted transition-colors hover:text-burgundy"
                             >
                               <Trash2 size={14} />
@@ -159,7 +164,7 @@ export default function CartDrawer() {
                                 <Minus size={12} />
                               </button>
                               <span className="min-w-5 text-center text-sm font-medium tabular-nums">
-                                {item.quantity}
+                                {formatNumber(item.quantity)}
                               </span>
                               <button
                                 type="button"
@@ -171,7 +176,7 @@ export default function CartDrawer() {
                               </button>
                             </div>
                             <p className="text-sm font-medium text-ink">
-                              {formatBDT(unitPrice * item.quantity)}
+                              {formatPrice(unitPrice * item.quantity)}
                             </p>
                           </div>
                         </div>
@@ -185,7 +190,7 @@ export default function CartDrawer() {
                 <div className="mt-8 flex flex-col gap-5 border-t border-divider pt-6">
                   {/* delivery toggle */}
                   <div>
-                    <p className="eyebrow mb-3">Delivery</p>
+                    <p className="eyebrow mb-3">{t('cartDeliveryArea')}</p>
                     <div className="flex gap-2">
                       {(['inside', 'outside'] as const).map((loc) => (
                         <button
@@ -199,14 +204,21 @@ export default function CartDrawer() {
                           }`}
                         >
                           <span className="block font-medium">
-                            {loc === 'inside' ? 'Inside Sylhet City' : 'Outside Sylhet City'}
+                            {loc === 'inside'
+                              ? isBn
+                                ? 'সিলেট শহরের ভেতর'
+                                : 'Inside Sylhet City'
+                              : isBn
+                              ? 'সিলেট শহরের বাইরে'
+                              : 'Outside Sylhet City'}
                           </span>
                           <span
                             className={`mt-1 block text-xs ${
                               delivery === loc ? 'text-cream/70' : 'text-muted'
                             }`}
                           >
-                            {formatBDT(loc === 'inside' ? 20 : 100)} delivery
+                            {formatPrice(loc === 'inside' ? 20 : 100)}{' '}
+                            {isBn ? 'ডেলিভারি' : 'delivery'}
                           </span>
                         </button>
                       ))}
@@ -216,14 +228,18 @@ export default function CartDrawer() {
                   {/* note */}
                   <div>
                     <label htmlFor="cart-note" className="eyebrow mb-3 block">
-                      Note (optional)
+                      {isBn ? 'কেকের ওপর বার্তা / বিশেষ নির্দেশনা' : 'Note (optional)'}
                     </label>
                     <textarea
                       id="cart-note"
                       rows={2}
                       value={note}
                       onChange={(e) => setNote(e.target.value)}
-                      placeholder="Any message for the cake or delivery instructions?"
+                      placeholder={
+                        isBn
+                          ? 'কেকের ওপর কী লেখা হবে অথবা ডেলিভারির কোনো বিশেষ ঠিকানা বা নির্দেশনা থাকলে লিখুন...'
+                          : 'Any message for the cake or delivery instructions?'
+                      }
                       className="w-full resize-none rounded-xl border border-divider bg-cream px-4 py-3 text-sm text-ink placeholder:text-muted focus:border-ink focus:outline-none"
                     />
                   </div>
@@ -236,17 +252,17 @@ export default function CartDrawer() {
               <div className="border-t border-divider bg-surface/60 px-6 py-6 md:px-8">
                 <dl className="mb-4 space-y-2 text-sm">
                   <div className="flex items-center justify-between">
-                    <dt className="text-muted">Subtotal</dt>
-                    <dd className="tabular-nums">{formatBDT(subtotal)}</dd>
+                    <dt className="text-muted">{t('cartSubtotal')}</dt>
+                    <dd className="tabular-nums">{formatPrice(subtotal)}</dd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <dt className="text-muted">Delivery</dt>
-                    <dd className="tabular-nums">{formatBDT(deliveryFee)}</dd>
+                    <dt className="text-muted">{t('cartDelivery')}</dt>
+                    <dd className="tabular-nums">{formatPrice(deliveryFee)}</dd>
                   </div>
                   <div className="flex items-center justify-between border-t border-divider pt-3">
-                    <dt className="font-serif text-lg text-ink">Total</dt>
+                    <dt className="font-serif text-lg text-ink">{t('cartTotal')}</dt>
                     <dd className="font-serif text-2xl text-ink tabular-nums">
-                      {formatBDT(total)}
+                      {formatPrice(total)}
                     </dd>
                   </div>
                 </dl>
@@ -256,10 +272,10 @@ export default function CartDrawer() {
                   rel="noreferrer"
                   className="flex items-center justify-center gap-2 rounded-full bg-burgundy px-6 py-4 text-sm font-medium text-cream transition-colors hover:bg-ink"
                 >
-                  Order on WhatsApp →
+                  {t('cartCheckoutWhatsApp')}
                 </a>
                 <p className="mt-3 text-center text-[11px] text-muted">
-                  We'll confirm details and bake your cake fresh for delivery.
+                  {t('cartNegotiableNote')}
                 </p>
               </div>
             )}

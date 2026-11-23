@@ -14,8 +14,8 @@ export default {
         nightfall: '#211D19',
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'ui-serif', 'Georgia', 'serif'],
-        sans: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', '"Noto Serif Bengali"', 'ui-serif', 'Georgia', 'serif'],
+        sans: ['"Inter"', '"Hind Siliguri"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         eyebrow: '0.22em',

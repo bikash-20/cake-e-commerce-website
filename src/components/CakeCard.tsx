@@ -2,9 +2,8 @@ import { useMemo, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import type { Cake } from '../data/cakes';
-
-const formatBDT = (n: number) => `৳${n.toLocaleString('en-IN')}`;
+import { useLanguage } from '../context/LanguageContext';
+import { type Cake, getCakeName, getCakeDescription } from '../data/cakes';
 
 type Props = {
   cake: Cake;
@@ -14,6 +13,8 @@ type Props = {
 
 export default function CakeCard({ cake, variant = 'default' }: Props) {
   const { addItem } = useCart();
+  const { isBn, t, formatNumber, formatPrice } = useLanguage();
+
   const initialWeight = cake.weights[0].weight;
   const [weight, setWeight] = useState<string>(initialWeight);
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
@@ -29,8 +30,10 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
   }, 0);
 
   const totalPrice = currentWeight.price + addOnTotal;
+  const cakeName = getCakeName(cake, isBn);
+  const cakeDesc = getCakeDescription(cake, isBn);
 
-  // Subtle parallax tilt on hover (CSS/Motion, not WebGL — keeps it light)
+  // Subtle parallax tilt on hover
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
   const sx = useSpring(rotateX, { stiffness: 200, damping: 18 });
@@ -81,7 +84,7 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
       >
         <motion.img
           src={cake.image}
-          alt={cake.name}
+          alt={cakeName}
           loading="lazy"
           style={{ scale: imgScale }}
           className="aspect-[4/5] h-full w-full object-cover"
@@ -89,21 +92,41 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-nightfall/35 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         <div className="pointer-events-none absolute bottom-3 left-4 right-4 flex items-end justify-between opacity-0 transition-opacity duration-500 group-hover:opacity-100">
           <span className="rounded-full bg-cream/90 px-3 py-1 text-[10px] uppercase tracking-eyebrow text-ink">
-            {cake.category}
+            {isBn
+              ? cake.category === 'bridal'
+                ? 'ব্রাইডাল'
+                : cake.category === 'birthday'
+                ? 'বার্থডে'
+                : cake.category === 'anniversary'
+                ? 'এনিভার্সারি'
+                : 'উৎসব'
+              : cake.category}
           </span>
         </div>
       </motion.div>
 
       <div className="mt-5 flex flex-col gap-4">
         <div>
-          <p className="eyebrow">{cake.category} Collection</p>
-          <h3 className="display mt-1 text-xl leading-tight md:text-2xl">{cake.name}</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted">{cake.description}</p>
+          <p className="eyebrow">
+            {isBn
+              ? `${
+                  cake.category === 'bridal'
+                    ? 'ব্রাইডাল'
+                    : cake.category === 'birthday'
+                    ? 'বার্থডে'
+                    : cake.category === 'anniversary'
+                    ? 'এনিভার্সারি'
+                    : 'স্পেশাল'
+                } কালেকশন`
+              : `${cake.category} Collection`}
+          </p>
+          <h3 className="display mt-1 text-xl leading-tight md:text-2xl">{cakeName}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted">{cakeDesc}</p>
         </div>
 
         {/* weight selector */}
         <div>
-          <p className="eyebrow mb-2">Weight</p>
+          <p className="eyebrow mb-2">{t('cardWeight')}</p>
           <div className="flex flex-wrap gap-2">
             {cake.weights.map((w) => {
               const active = w.weight === weight;
@@ -118,13 +141,16 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
                       : 'border-divider bg-cream text-ink hover:border-ink/50'
                   }`}
                 >
-                  <span className="text-xs font-medium">{w.weight}kg</span>
+                  <span className="text-xs font-medium">
+                    {formatNumber(w.weight)}
+                    {isBn ? ' কেজি' : 'kg'}
+                  </span>
                   <span
                     className={`text-[11px] tabular-nums ${
                       active ? 'text-cream/70' : 'text-muted'
                     }`}
                   >
-                    {formatBDT(w.price)}
+                    {formatPrice(w.price)}
                   </span>
                 </button>
               );
@@ -135,10 +161,11 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
         {/* add-ons (if any) */}
         {cake.addons && cake.addons.length > 0 && (
           <div>
-            <p className="eyebrow mb-2">Add-ons</p>
+            <p className="eyebrow mb-2">{t('cardAddons')}</p>
             <div className="flex flex-col gap-1.5">
               {cake.addons.map((a) => {
                 const active = selectedAddOns.includes(a.id);
+                const addonLabel = isBn && a.labelBn ? a.labelBn : a.label;
                 return (
                   <label
                     key={a.id}
@@ -162,10 +189,14 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
                           </svg>
                         )}
                       </span>
-                      <span className="text-ink">{a.label}</span>
+                      <span className="text-ink">{addonLabel}</span>
                     </span>
                     <span className="text-xs text-muted tabular-nums">
-                      {a.price === 0 ? 'Free' : `+${formatBDT(a.price)}`}
+                      {a.price === 0
+                        ? isBn
+                          ? 'ফ্রি'
+                          : 'Free'
+                        : `+${formatPrice(a.price)}`}
                     </span>
                     <input
                       type="checkbox"
@@ -183,8 +214,8 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
         {/* total + add to cart */}
         <div className="mt-1 flex items-center justify-between gap-3 border-t border-divider pt-4">
           <div>
-            <p className="eyebrow">Total</p>
-            <p className="font-serif text-2xl text-ink tabular-nums">{formatBDT(totalPrice)}</p>
+            <p className="eyebrow">{isBn ? 'মূল্য (আলোচনা সাপেক্ষ)' : 'Total (Negotiable)'}</p>
+            <p className="font-serif text-2xl text-ink tabular-nums">{formatPrice(totalPrice)}</p>
           </div>
           <button
             type="button"
@@ -193,7 +224,7 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
             data-cursor="order"
           >
             <Plus size={14} strokeWidth={1.6} />
-            Add to Cart
+            {t('cardAddToCart')}
           </button>
         </div>
       </div>

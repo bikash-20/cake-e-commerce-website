@@ -15,18 +15,11 @@ import AIAssistant from './components/AIAssistant';
 import ScrollToTop from './components/ScrollToTop';
 import GrainOverlay from './components/GrainOverlay';
 import { cakesByCategory } from './data/cakes';
-
-// ============================================================================
-//  TODO: AI Assistant integration — coming soon
-//  Plan: floating bubble bottom-left (above ScrollToTop), opens a small panel
-//  that recommends a cake + flavor from user prompts ("anniversary cake for
-//  parents, under ৳2000, delivered outside Sylhet"). Will be wired to a free
-//  LLM endpoint (e.g. OpenRouter free tier or local Llama.cpp). For now, do
-//  not render — just leave this stub so future work has a clear anchor.
-// ============================================================================
+import { useLanguage } from './context/LanguageContext';
 
 export default function App() {
   useLenis();
+  const { t, isBn } = useLanguage();
 
   // Active-section highlighting for in-page nav
   useEffect(() => {
@@ -42,9 +35,6 @@ export default function App() {
       for (const s of sections) {
         if (s.offsetTop <= probe) current = s.id;
       }
-      // Respect the navbar's current theme: cream-tinted over the hero,
-      // ink-tinted over cream sections. Active link inherits the
-      // stronger color of whichever theme the bar is currently using.
       const header = document.querySelector<HTMLElement>('header[data-nav-theme]');
       const theme = header?.dataset.navTheme ?? 'light';
       const idleCls = theme === 'dark' ? 'text-cream/85' : 'text-ink/80';
@@ -68,20 +58,22 @@ export default function App() {
       <main>
         <Hero />
 
-        {/* Studio Atelier–style 3-card teaser row.
-            Lives on the cream background so it never overlaps the hero
-            copy or the WhatsApp FAB on mobile. */}
+        {/* 3-card teaser row */}
         <CollectionsTeaser />
 
         <CategorySection
           id="bridal"
-          eyebrow="Bridal Collection"
+          eyebrow={t('bridalEyebrow')}
           heading={
             <>
-              Say <span className="italic-accent">&ldquo;Yes&rdquo;</span> to the Perfect Cake
+              {t('bridalHeading')}{' '}
+              <span className="italic-accent">
+                {isBn ? '“হ্যাঁ”' : '“Yes”'}
+              </span>{' '}
+              {isBn ? 'বলুন সেরা কেকটি দিয়ে' : 'to the Perfect Cake'}
             </>
           }
-          description="From engagement rings to wedding florals — heart-shaped, fondant, and buttercream cakes designed for your big day."
+          description={t('bridalDesc')}
           index="01"
           align="left"
         >
@@ -90,13 +82,14 @@ export default function App() {
 
         <CategorySection
           id="birthday"
-          eyebrow="Birthday Collection"
+          eyebrow={t('birthdayEyebrow')}
           heading={
             <>
-              Make Every <span className="italic-accent">Candle Count.</span>
+              {t('birthdayHeading')}{' '}
+              <span className="italic-accent">{t('birthdayHeadingAccent')}</span>
             </>
           }
-          description="Playful, elegant, and everything in between — birthday cakes designed around your favorite flavors and colors."
+          description={t('birthdayDesc')}
           index="02"
           align="right"
         >
@@ -105,13 +98,14 @@ export default function App() {
 
         <CategorySection
           id="anniversary"
-          eyebrow="Anniversary Collection"
+          eyebrow={t('anniversaryEyebrow')}
           heading={
             <>
-              Celebrate <span className="italic-accent">Every Chapter.</span>
+              {t('anniversaryHeading')}{' '}
+              <span className="italic-accent">{t('anniversaryHeadingAccent')}</span>
             </>
           }
-          description="Rich, romantic cakes to mark another year of love — customizable with names, dates, and heartfelt messages."
+          description={t('anniversaryDesc')}
           index="03"
           align="left"
         >
@@ -120,13 +114,14 @@ export default function App() {
 
         <CategorySection
           id="diwali"
-          eyebrow="Festive & Diwali"
+          eyebrow={t('diwaliEyebrow')}
           heading={
             <>
-              A Sweet Way to <span className="italic-accent">Celebrate Light.</span>
+              {t('diwaliHeading')}{' '}
+              <span className="italic-accent">{t('diwaliHeadingAccent')}</span>
             </>
           }
-          description="Festive chocolate cakes with gold accents — for Diwali, Eid, and every occasion worth marking."
+          description={t('diwaliDesc')}
           index="04"
           align="right"
         >

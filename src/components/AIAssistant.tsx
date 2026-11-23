@@ -1,24 +1,38 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, X, Send, RotateCcw, Phone, Facebook, Mail, Loader2, Bot } from 'lucide-react';
+import { Sparkles, X, Send, RotateCcw, Phone, Facebook, Loader2, Bot } from 'lucide-react';
 import { sendChatMessage, ChatMessage, OWNER_INFO } from '../services/aiService';
-
-const SUGGESTED_PROMPTS = [
-  '🎂 Recommend a Bridal Cake',
-  '🎉 Birthday Cakes under ৳1500',
-  '🚚 Delivery Fees in Sylhet',
-  '👤 Contact Owner Bikash Talukder',
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const { isBn, formatNumber } = useLanguage();
+
+  const suggestedPrompts = isBn
+    ? [
+        '🎂 ব্রাইডাল কেক সাজেশন',
+        '🎉 ১৫০০ টাকার মধ্যে বার্থডে কেক',
+        '🚚 সিলেটে ডেলিভারি চার্জ কত?',
+        '👤 স্বত্বাধিকারী বিকাশ তালুকদারের সাথে যোগাযোগ',
+      ]
+    : [
+        '🎂 Recommend a Bridal Cake',
+        '🎉 Birthday Cakes under ৳1500',
+        '🚚 Delivery Fees in Sylhet',
+        '👤 Contact Owner Bikash Talukder',
+      ];
+
+  const defaultGreeting = isBn
+    ? `হ্যালো! **Sugar & Sylhet**-এ আপনাকে স্বাগতম। আমি আপনার এআই কনসিয়ার্জ।\n\n✨ **বিশেষ তথ্য**: আমাদের এখানে কোনো দামই নির্দিষ্ট নয়! সব কেকের দাম আলোচনা সাপেক্ষ এবং আপনি আমাদের স্বত্বাধিকারী **বিকাশ তালুকদার**-এর সাথে **${formatNumber(OWNER_INFO.phone)}** নম্বরে কথা বলে আপনার বাজেট অনুযায়ী দাম নির্ধারণ করতে পারেন।\n\nআমাদের ফ্লেভার, কেক কালেকশন বা সিলেটে হোম ডেলিভারি নিয়ে যেকোনো প্রশ্ন করতে পারেন!`
+    : `Hello! Welcome to **Sugar & Sylhet**. I'm your AI Concierge.\n\n✨ **Good news**: No price is fixed here! All cake prices are flexible and you can negotiate directly with our owner **Bikash Talukder** at **${OWNER_INFO.phone}**.\n\nAsk me about our flavors, cake collections, or delivery in Sylhet!`;
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
       role: 'assistant',
-      content: `Hello! Welcome to **Sugar & Sylhet**. I'm your AI Concierge.\n\n✨ **Good news**: No price is fixed here! All cake prices are flexible and you can negotiate directly with our owner **Bikash Talukder** at **${OWNER_INFO.phone}**.\n\nAsk me about our flavors, cake collections, or delivery in Sylhet!`,
+      content: defaultGreeting,
       timestamp: Date.now(),
     },
   ]);
@@ -36,6 +50,23 @@ export default function AIAssistant() {
       inputRef.current?.focus();
     }
   }, [isOpen, messages]);
+
+  // Update welcome greeting when language changes if no conversation started
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length <= 1) {
+        return [
+          {
+            id: 'welcome',
+            role: 'assistant',
+            content: defaultGreeting,
+            timestamp: Date.now(),
+          },
+        ];
+      }
+      return prev;
+    });
+  }, [isBn, defaultGreeting]);
 
   const handleSend = async (textToSend?: string) => {
     const text = (textToSend || input).trim();
@@ -68,7 +99,9 @@ export default function AIAssistant() {
         {
           id: `assistant-err-${Date.now()}`,
           role: 'assistant',
-          content: `You can reach our owner Bikash Talukder directly at **${OWNER_INFO.phone}**, via [Facebook](${OWNER_INFO.facebook}), or email [${OWNER_INFO.email}](mailto:${OWNER_INFO.email}).`,
+          content: isBn
+            ? `আপনি সরাসরি আমাদের স্বত্বাধিকারী বিকাশ তালুকদারকে **${formatNumber(OWNER_INFO.phone)}** নম্বরে কল করতে পারেন, [ফেসবুকে](${OWNER_INFO.facebook}) মেসেজ দিতে পারেন বা [${OWNER_INFO.email}](mailto:${OWNER_INFO.email})-এ ইমেইল পাঠাতে পারেন।`
+            : `You can reach our owner Bikash Talukder directly at **${OWNER_INFO.phone}**, via [Facebook](${OWNER_INFO.facebook}), or email [${OWNER_INFO.email}](mailto:${OWNER_INFO.email}).`,
           timestamp: Date.now(),
         },
       ]);
@@ -82,7 +115,9 @@ export default function AIAssistant() {
       {
         id: 'welcome-reset',
         role: 'assistant',
-        content: `Chat cleared! How can I help you choose your cake today? For custom orders, feel free to call or WhatsApp Bikash Talukder at **${OWNER_INFO.phone}**.`,
+        content: isBn
+          ? `চ্যাট মুছে ফেলা হয়েছে! আজ কোন কেকটি পছন্দ করতে সাহায্য করতে পারি? যেকোনো কাস্টম কেকের জন্য বিকাশ তালুকদারকে সরাসরি কল বা হোয়াটসঅ্যাপ করুন: **${formatNumber(OWNER_INFO.phone)}**.`
+          : `Chat cleared! How can I help you choose your cake today? For custom orders, feel free to call or WhatsApp Bikash Talukder at **${OWNER_INFO.phone}**.`,
         timestamp: Date.now(),
       },
     ]);
@@ -91,13 +126,11 @@ export default function AIAssistant() {
   /** Formats simple markdown bold, bullet points, and links into clickable JSX */
   const renderFormattedText = (content: string) => {
     return content.split('\n').map((line, lineIdx) => {
-      // Parse markdown links [text](url) and **bold**
       const parts = line.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g);
 
       return (
         <span key={lineIdx} className="block min-h-[1.25rem]">
           {parts.map((part, pIdx) => {
-            // Bold
             if (part.startsWith('**') && part.endsWith('**')) {
               return (
                 <strong key={pIdx} className="font-semibold text-ink">
@@ -105,7 +138,6 @@ export default function AIAssistant() {
                 </strong>
               );
             }
-            // Link
             const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
             if (linkMatch) {
               const [, text, url] = linkMatch;
@@ -148,7 +180,7 @@ export default function AIAssistant() {
               <Sparkles size={14} className="animate-pulse text-gold" />
             </span>
             <span className="font-serif text-[13px] tracking-wide text-cream">
-              Ask AI Concierge
+              {isBn ? 'এআই কেক কনসিয়ার্জ' : 'Ask AI Concierge'}
             </span>
             <span className="flex h-2 w-2 rounded-full bg-emerald-400 ring-4 ring-emerald-400/20" />
           </motion.button>
@@ -179,7 +211,7 @@ export default function AIAssistant() {
                     Sugar & Sylhet AI
                   </h3>
                   <p className="text-[10px] font-medium uppercase tracking-wider text-muted">
-                    Bikash Talukder's Bakery Concierge
+                    {isBn ? 'বিকাশ তালুকদারের বেকারি সহকারী' : "Bikash Talukder's Bakery Concierge"}
                   </p>
                 </div>
               </div>
@@ -208,14 +240,14 @@ export default function AIAssistant() {
 
             {/* Quick Contact Bar for Owner */}
             <div className="flex items-center justify-between border-b border-divider/50 bg-cream/70 px-4 py-1.5 text-[11px] text-muted">
-              <span>Owner: <strong className="text-ink">Bikash Talukder</strong></span>
+              <span>{isBn ? 'মালিক:' : 'Owner:'} <strong className="text-ink">Bikash Talukder</strong></span>
               <div className="flex items-center gap-2">
                 <a
                   href={`tel:${OWNER_INFO.phoneE164}`}
                   className="flex items-center gap-1 font-medium text-burgundy hover:underline"
                   title="Call Bikash Talukder"
                 >
-                  <Phone size={10} /> {OWNER_INFO.phone}
+                  <Phone size={10} /> {formatNumber(OWNER_INFO.phone)}
                 </a>
                 <span>•</span>
                 <a
@@ -253,7 +285,7 @@ export default function AIAssistant() {
                 <div className="flex justify-start">
                   <div className="flex items-center gap-2 rounded-2xl rounded-bl-xs border border-divider/70 bg-white/90 px-3.5 py-2.5 text-xs text-muted shadow-2xs">
                     <Loader2 size={13} className="animate-spin text-burgundy" />
-                    <span>Thinking & checking menu...</span>
+                    <span>{isBn ? 'মেন্যু চেক ও ভাবছি...' : 'Thinking & checking menu...'}</span>
                   </div>
                 </div>
               )}
@@ -261,10 +293,10 @@ export default function AIAssistant() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Quick Suggestion Chips (when only 1 or 2 messages exist) */}
+            {/* Quick Suggestion Chips */}
             {messages.length <= 2 && (
               <div className="flex flex-wrap gap-1.5 border-t border-divider/40 bg-surface/30 px-3 py-2">
-                {SUGGESTED_PROMPTS.map((prompt) => (
+                {suggestedPrompts.map((prompt) => (
                   <button
                     key={prompt}
                     type="button"
@@ -291,7 +323,11 @@ export default function AIAssistant() {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask about cakes, flavors, prices..."
+                  placeholder={
+                    isBn
+                      ? 'কেক, ফ্লেভার, ডেলিভারি বা দাম সম্পর্কে জিজ্ঞাসা করুন...'
+                      : 'Ask about cakes, flavors, prices...'
+                  }
                   className="w-full rounded-xl border border-divider bg-white px-3.5 py-2.5 pr-10 text-xs text-ink placeholder:text-muted/70 focus:border-burgundy focus:outline-none focus:ring-1 focus:ring-burgundy"
                   disabled={loading}
                 />
@@ -305,7 +341,10 @@ export default function AIAssistant() {
                 </button>
               </div>
               <p className="mt-1.5 text-center text-[10px] text-muted">
-                Powered by OpenRouter Free AI • Call or WhatsApp: <a href={`tel:${OWNER_INFO.phoneE164}`} className="underline">{OWNER_INFO.phone}</a>
+                {isBn ? 'ওপেনরাউটার ফ্রি এআই দ্বারা পরিচালিত' : 'Powered by OpenRouter Free AI'} •{' '}
+                <a href={`tel:${OWNER_INFO.phoneE164}`} className="underline">
+                  {formatNumber(OWNER_INFO.phone)}
+                </a>
               </p>
             </form>
           </motion.div>

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import SectionReveal from './SectionReveal';
+import { useLanguage } from '../context/LanguageContext';
 
 type Props = {
   id: string;
@@ -24,6 +25,8 @@ export default function CategorySection({
   children,
   align = 'left',
 }: Props) {
+  const { formatNumber } = useLanguage();
+
   return (
     <section id={id} className="relative scroll-mt-24 py-20 md:py-32">
       <div className="mx-auto max-w-editorial px-6 md:px-12">
@@ -31,7 +34,7 @@ export default function CategorySection({
           {/* Index column */}
           <div className={`md:col-span-2 ${align === 'right' ? 'md:order-3' : ''}`}>
             <div className="flex items-center gap-3">
-              <span className="font-serif text-3xl text-muted">{index}</span>
+              <span className="font-serif text-3xl text-muted">{formatNumber(index)}</span>
               <span className="h-px w-10 bg-divider" />
             </div>
           </div>

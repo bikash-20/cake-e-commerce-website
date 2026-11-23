@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BRAND } from '../data/cakes';
-import { Instagram, Facebook, Phone, X, MessageCircle, ExternalLink } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { Instagram, Facebook, Phone, X } from 'lucide-react';
 
 export default function WhatsAppFAB() {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { isBn, formatNumber } = useLanguage();
 
   // Close when clicking outside
   useEffect(() => {
@@ -34,8 +36,8 @@ export default function WhatsAppFAB() {
   const socialLinks = [
     {
       id: 'whatsapp',
-      label: 'WhatsApp Chat',
-      sublabel: BRAND.whatsappDisplay,
+      label: isBn ? 'হোয়াটসঅ্যাপ চ্যাট' : 'WhatsApp Chat',
+      sublabel: formatNumber(BRAND.whatsappDisplay),
       href: `https://wa.me/${BRAND.whatsappE164}`,
       bgColor: 'bg-[#25D366]',
       hoverBg: 'hover:bg-[#20bd5a]',
@@ -56,7 +58,7 @@ export default function WhatsAppFAB() {
     },
     {
       id: 'facebook',
-      label: 'Facebook Profile',
+      label: isBn ? 'ফেসবুক প্রোফাইল' : 'Facebook Profile',
       sublabel: 'Bikash Talukder',
       href: BRAND.facebook,
       bgColor: 'bg-[#1877F2]',
@@ -65,8 +67,8 @@ export default function WhatsAppFAB() {
     },
     {
       id: 'call',
-      label: 'Direct Phone',
-      sublabel: `Call ${BRAND.whatsappDisplay}`,
+      label: isBn ? 'সরাসরি কল' : 'Direct Phone',
+      sublabel: `${isBn ? 'কল করুন' : 'Call'} ${formatNumber(BRAND.whatsappDisplay)}`,
       href: `tel:+${BRAND.whatsappE164}`,
       bgColor: 'bg-gold',
       hoverBg: 'hover:bg-gold/90',
@@ -168,7 +170,13 @@ export default function WhatsAppFAB() {
           </AnimatePresence>
         </div>
         <span className="font-serif font-medium tracking-wide">
-          {isOpen ? 'Close' : 'Chat & Connect'}
+          {isOpen
+            ? isBn
+              ? 'বন্ধ করুন'
+              : 'Close'
+            : isBn
+            ? 'যোগাযোগ করুন'
+            : 'Chat & Connect'}
         </span>
       </motion.button>
     </div>

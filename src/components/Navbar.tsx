@@ -1,19 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Menu, X, Instagram } from 'lucide-react';
+import { ShoppingBag, Menu, X, Instagram, Globe } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import { BRAND } from '../data/cakes';
 import MagneticButton from './MagneticButton';
 import { useMediaQuery } from '../hooks/useMedia';
-
-const NAV_LINKS = [
-  { href: '#home', label: 'Home' },
-  { href: '#bridal', label: 'Bridal' },
-  { href: '#birthday', label: 'Birthday' },
-  { href: '#anniversary', label: 'Anniversary' },
-  { href: '#how-it-works', label: 'How It Works' },
-  { href: '#contact', label: 'Contact' },
-];
 
 /**
  * Transparent navbar that overlays the hero.
@@ -21,14 +13,26 @@ const NAV_LINKS = [
  *   the cake image is visible behind it.
  * - After scrolling past the hero: fades to a soft cream tint with dark
  *   text so links stay readable on the cream site background.
- * - Mobile drawer remains a solid cream panel below the bar (it's an
- *   overlay sheet, not part of the bar itself).
+ * - Mobile drawer remains a solid cream panel below the bar.
  */
 export default function Navbar() {
   const { itemCount, openCart } = useCart();
+  const { lang, toggleLang, t, isBn } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
+
+  const navLinks = useMemo(
+    () => [
+      { href: '#home', label: t('navHome') },
+      { href: '#bridal', label: t('navBridal') },
+      { href: '#birthday', label: t('navBirthday') },
+      { href: '#anniversary', label: t('navAnniversary') },
+      { href: '#how-it-works', label: t('navHowItWorks') },
+      { href: '#contact', label: t('navContact') },
+    ],
+    [t]
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -46,8 +50,7 @@ export default function Navbar() {
     };
   }, [mobileOpen]);
 
-  // Theme tokens driven by the same `scrolled` state so we never have
-  // to recompute on every render.
+  // Theme tokens driven by the same `scrolled` state
   const overHero = !scrolled;
   const navBg = overHero
     ? 'rgba(0,0,0,0)' // transparent over hero
@@ -60,7 +63,6 @@ export default function Navbar() {
   const linkBase =
     'group relative text-[13px] font-medium transition-colors duration-300';
   const linkIdle = overHero ? 'text-cream/85 hover:text-cream' : 'text-ink/80 hover:text-ink';
-  const linkActive = overHero ? 'text-cream' : 'text-ink';
   const linkUnderline = overHero ? 'bg-cream' : 'bg-ink';
 
   const cartBtn =
@@ -68,6 +70,13 @@ export default function Navbar() {
     (overHero
       ? 'border border-cream/40 text-cream hover:border-cream hover:bg-cream/10'
       : 'border border-divider text-ink hover:border-ink');
+
+  const langBtn =
+    'relative flex h-10 items-center justify-center gap-1.5 rounded-full px-3 text-xs font-semibold tracking-wide transition-colors duration-300 ' +
+    (overHero
+      ? 'border border-cream/40 text-cream hover:border-cream hover:bg-cream/10'
+      : 'border border-divider text-ink hover:border-ink bg-cream/50');
+
   const mobileBtn =
     'flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-300 ' +
     (overHero
@@ -99,14 +108,14 @@ export default function Navbar() {
               (overHero ? 'text-cream/70' : 'text-burgundy')
             }
           >
-            {BRAND.eyebrow}
+            {isBn ? 'আর্টিসান কেক স্টুডিও · সিলেট' : BRAND.eyebrow}
           </span>
         </a>
 
         {/* Desktop nav */}
         {!isMobile && (
           <nav className="hidden items-center gap-7 md:flex">
-            {NAV_LINKS.slice(1, 5).map((l) => (
+            {navLinks.slice(1, 5).map((l) => (
               <a
                 key={l.href}
                 href={l.href}
@@ -126,14 +135,27 @@ export default function Navbar() {
               data-nav-theme={overHero ? 'dark' : 'light'}
               className={`${linkBase} ${linkIdle}`}
             >
-              Contact
+              {t('navContact')}
             </a>
           </nav>
         )}
 
         {/* Right cluster */}
-        <div className="flex items-center gap-3">
-          {/* Instagram Link / Quick Toggle */}
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          {/* Language Toggle Button (Desktop & Mobile) */}
+          <button
+            type="button"
+            onClick={toggleLang}
+            aria-label={lang === 'en' ? 'বাংলা ভাষায় দেখুন' : 'Switch to English'}
+            title={lang === 'en' ? 'বাংলা ভাষায় দেখুন' : 'Switch to English'}
+            data-nav-theme={overHero ? 'dark' : 'light'}
+            className={langBtn}
+          >
+            <Globe size={13} className="opacity-80" />
+            <span>{lang === 'en' ? 'বাংলা' : 'EN'}</span>
+          </button>
+
+          {/* Instagram Link */}
           <a
             href={BRAND.instagram}
             target="_blank"
@@ -146,6 +168,7 @@ export default function Navbar() {
             <Instagram size={16} strokeWidth={1.5} />
           </a>
 
+          {/* Cart Button */}
           <button
             type="button"
             onClick={openCart}
@@ -170,6 +193,7 @@ export default function Navbar() {
             </AnimatePresence>
           </button>
 
+          {/* Order Now CTA (Desktop) */}
           {!isMobile && (
             <MagneticButton
               asLink
@@ -184,10 +208,11 @@ export default function Navbar() {
                   : 'bg-ink text-cream hover:bg-burgundy')
               }
             >
-              Order Now
+              {t('navOrderNow')}
             </MagneticButton>
           )}
 
+          {/* Mobile hamburger menu */}
           {isMobile && (
             <button
               type="button"
@@ -202,7 +227,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile drawer — solid cream panel, sits below the transparent bar. */}
+      {/* Mobile drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -214,7 +239,7 @@ export default function Navbar() {
             className="md:hidden"
           >
             <div className="mx-6 mb-6 flex flex-col divide-y divide-divider rounded-2xl bg-cream/95 px-6 py-2 shadow-[0_30px_60px_-30px_rgba(42,38,34,0.35)] backdrop-blur">
-              {NAV_LINKS.map((l) => (
+              {navLinks.map((l) => (
                 <a
                   key={l.href}
                   href={l.href}
@@ -224,6 +249,19 @@ export default function Navbar() {
                   {l.label}
                 </a>
               ))}
+              <div className="flex items-center justify-between py-4 text-base font-medium text-ink">
+                <span className="flex items-center gap-2">
+                  <Globe size={18} className="text-gold" />
+                  {isBn ? 'ভাষা পরিবর্তন (Language)' : 'Language'}
+                </span>
+                <button
+                  type="button"
+                  onClick={toggleLang}
+                  className="rounded-full bg-ink px-4 py-1.5 text-xs font-semibold text-cream"
+                >
+                  {lang === 'en' ? 'বাংলা' : 'English'}
+                </button>
+              </div>
               <a
                 href={BRAND.instagram}
                 target="_blank"
@@ -244,7 +282,7 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className="py-4 text-base font-medium text-burgundy"
               >
-                Order Now →
+                {t('navOrderNow')} →
               </a>
             </div>
           </motion.div>
