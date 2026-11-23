@@ -18,7 +18,7 @@ export default function AIAssistant() {
     {
       id: 'welcome',
       role: 'assistant',
-      content: `Hello! Welcome to **Sugar & Sylhet**. I'm your AI Concierge.\n\nAsk me about our artisanal cakes, custom flavors, pricing, or delivery in Sylhet! You can also reach our owner **Bikash Talukder** directly at **${OWNER_INFO.phone}**.`,
+      content: `Hello! Welcome to **Sugar & Sylhet**. I'm your AI Concierge.\n\n✨ **Good news**: No price is fixed here! All cake prices are flexible and you can negotiate directly with our owner **Bikash Talukder** at **${OWNER_INFO.phone}**.\n\nAsk me about our flavors, cake collections, or delivery in Sylhet!`,
       timestamp: Date.now(),
     },
   ]);

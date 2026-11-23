@@ -59,11 +59,11 @@ function generateLocalKnowledgeReply(query: string): string {
   if (q.includes('bridal') || q.includes('wedding') || q.includes('engagement') || q.includes('marry')) {
     const bridalCakes = CAKES.filter((c) => c.category === 'bridal');
     const list = bridalCakes
-      .map((c) => `• **${c.name}**: starting from ৳${c.weights[0].price} (${c.weights[0].weight}kg)`)
+      .map((c) => `• **${c.name}**: guide price from ৳${c.weights[0].price} (${c.weights[0].weight}kg)`)
       .join('\n');
     return (
       `Here are our signature **Bridal & Engagement Cakes**:\n\n${list}\n\n` +
-      `For custom tiered cakes and floral themes, call or WhatsApp Bikash Talukder at **${OWNER_INFO.phone}**!`
+      `💡 **Price Note**: No price is fixed here! All prices are negotiable. You can negotiate directly with owner **Bikash Talukder** at [${OWNER_INFO.phone}](tel:${OWNER_INFO.phoneE164}) to fit your wedding budget!`
     );
   }
 
@@ -71,12 +71,12 @@ function generateLocalKnowledgeReply(query: string): string {
   if (q.includes('birthday') || q.includes('birth') || q.includes('kids')) {
     const bdayCakes = CAKES.filter((c) => c.category === 'birthday');
     const list = bdayCakes
-      .map((c) => `• **${c.name}**: ৳${c.weights[0].price} (${c.weights[0].weight}kg)`)
+      .map((c) => `• **${c.name}**: guide price ৳${c.weights[0].price} (${c.weights[0].weight}kg)`)
       .join('\n');
     return (
       `Here are our handcrafted **Birthday Cakes**:\n\n${list}\n\n` +
-      `**Add-ons:** Custom name (Free), Edible photo print (৳150), Acrylic topper (৳120).\n` +
-      `Ready to order? Message Bikash Talukder at **${OWNER_INFO.phone}** or email [${OWNER_INFO.email}](mailto:${OWNER_INFO.email}).`
+      `**Add-ons:** Custom name (Free), Edible photo print (৳150), Acrylic topper (৳120).\n\n` +
+      `💡 **Price Note**: None of our prices are fixed — you can negotiate directly with owner **Bikash Talukder** at [${OWNER_INFO.phone}](tel:${OWNER_INFO.phoneE164}) or [Facebook](${OWNER_INFO.facebook}) to match your exact budget!`
     );
   }
 
@@ -84,11 +84,11 @@ function generateLocalKnowledgeReply(query: string): string {
   if (q.includes('anniversary') || q.includes('romantic') || q.includes('milestone')) {
     const anniCakes = CAKES.filter((c) => c.category === 'anniversary');
     const list = anniCakes
-      .map((c) => `• **${c.name}**: starting at ৳${c.weights[0].price}`)
+      .map((c) => `• **${c.name}**: guide price from ৳${c.weights[0].price}`)
       .join('\n');
     return (
       `Celebrate your special moments with our **Anniversary Cakes**:\n\n${list}\n\n` +
-      `To customize names and dates, reach Bikash Talukder directly at **${OWNER_INFO.phone}** or [Facebook](${OWNER_INFO.facebook})!`
+      `💡 **Price Note**: No price is fixed! You can negotiate directly with owner **Bikash Talukder** at [${OWNER_INFO.phone}](tel:${OWNER_INFO.phoneE164}) or [Facebook](${OWNER_INFO.facebook})!`
     );
   }
 
@@ -96,7 +96,8 @@ function generateLocalKnowledgeReply(query: string): string {
   return (
     `Welcome to **Sugar & Sylhet**! Handcrafted artisan cakes in Sylhet, curated by **${OWNER_INFO.name}**.\n\n` +
     `We specialize in **Bridal, Birthday, Anniversary, and Festive/Diwali Cakes** starting from ৳850.\n\n` +
-    `How to reach us:\n` +
+    `✨ **Important**: None of our prices are fixed! All prices are negotiable directly with Bikash Talukder.\n\n` +
+    `How to reach us & negotiate:\n` +
     `• **Direct Phone / WhatsApp**: [${OWNER_INFO.phone}](tel:${OWNER_INFO.phoneE164})\n` +
     `• **Facebook**: [Bikash Talukder Profile](${OWNER_INFO.facebook})\n` +
     `• **Email**: [${OWNER_INFO.email}](mailto:${OWNER_INFO.email})\n\n` +

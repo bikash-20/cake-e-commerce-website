@@ -46,7 +46,11 @@ YOUR CORE IDENTITY & RULES:
      - Photo / edible print topper: ৳150
      - Acrylic topper: ৳120
      - Gold sparkler topper set: ৳200
-5. Keep your responses friendly, concise, and structured. Always offer to connect customers to Bikash on WhatsApp (01926240062) or Facebook to place or finalize their order.`;
+5. NEGOTIABLE PRICING (CRITICAL RULE):
+   - You MUST tell customers that NO PRICE IS FIXED here! All prices listed are guideline estimates.
+   - Customers can negotiate directly with the owner Bikash Talukder (01926240062) to fit their specific budget, event size, design, or custom flavors.
+   - Whenever mentioning prices or quotes, add a warm note such as: "Please note that none of our prices are fixed — you can negotiate directly with our owner Bikash Talukder (01926240062) to find a price that works best for you!"
+6. Keep your responses friendly, concise, and structured. Always offer to connect customers to Bikash on WhatsApp (01926240062) or Facebook to place or negotiate their order.`;
 
 // List of high-quality free OpenRouter models to try in sequence
 const FREE_MODELS = [
