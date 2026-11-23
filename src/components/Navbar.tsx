@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Menu, X } from 'lucide-react';
+import { ShoppingBag, Menu, X, Instagram } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { BRAND } from '../data/cakes';
 import MagneticButton from './MagneticButton';
@@ -133,6 +133,19 @@ export default function Navbar() {
 
         {/* Right cluster */}
         <div className="flex items-center gap-3">
+          {/* Instagram Link / Quick Toggle */}
+          <a
+            href={BRAND.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Visit ${BRAND.instagramHandle} on Instagram`}
+            data-nav-theme={overHero ? 'dark' : 'light'}
+            className={cartBtn}
+            title={`Follow ${BRAND.instagramHandle} on Instagram`}
+          >
+            <Instagram size={16} strokeWidth={1.5} />
+          </a>
+
           <button
             type="button"
             onClick={openCart}
@@ -211,6 +224,19 @@ export default function Navbar() {
                   {l.label}
                 </a>
               ))}
+              <a
+                href={BRAND.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between py-4 text-base font-medium text-ink"
+              >
+                <span className="flex items-center gap-2">
+                  <Instagram size={18} className="text-[#dc2743]" />
+                  Follow {BRAND.instagramHandle}
+                </span>
+                <span className="text-xs text-muted">Instagram →</span>
+              </a>
               <a
                 href={`https://wa.me/${BRAND.whatsappE164}`}
                 target="_blank"

@@ -3,32 +3,95 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#F4EFE9" />
+    <meta name="color-scheme" content="light" />
 
-    <title>Sugar & Sylhet — Artisan Cakes, Made to Order in Sylhet</title>
+    <!-- Search Engine Verification -->
+    <!-- Google Search Console: Replace YOUR_GOOGLE_SEARCH_CONSOLE_VERIFICATION_TOKEN with your actual verification code from GSC -->
+    <meta name="google-site-verification" content="YOUR_GOOGLE_SEARCH_CONSOLE_VERIFICATION_TOKEN" />
+    <!-- Bing Webmaster Tools verification -->
+    <meta name="msvalidate.01" content="YOUR_BING_WEBMASTER_VERIFICATION_TOKEN" />
+    <!-- Yandex Webmaster verification -->
+    <meta name="yandex-verification" content="YOUR_YANDEX_VERIFICATION_TOKEN" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sugarandsylhet.com/" />
+
+    <!-- Primary Title & Meta Description -->
+    <title>Sugar & Sylhet — Handcrafted Artisan Cakes in Sylhet | NT Delights</title>
+    <meta
+      name="title"
+      content="Sugar & Sylhet — Handcrafted Artisan Cakes in Sylhet | NT Delights"
+    />
     <meta
       name="description"
-      content="Handcrafted bridal, birthday and anniversary cakes — baked fresh in Sylhet and delivered with care to your doorstep. Order via WhatsApp."
+      content="Order handcrafted bridal, wedding, birthday & anniversary cakes in Sylhet from Sugar & Sylhet (NT Delights). Freshly baked, custom designed & delivered to your doorstep. Order via WhatsApp & Instagram @nt__delights."
     />
-    <meta name="author" content="Sugar & Sylhet — Engineer Bikash Talukder" />
+    <meta
+      name="keywords"
+      content="cake shop in Sylhet, cakes Sylhet, best cakes in Sylhet, bridal cakes Sylhet, wedding cake Sylhet, birthday cake Sylhet, anniversary cakes Sylhet, NT Delights, nt__delights, Sugar and Sylhet, online cake delivery Sylhet, custom cake Sylhet Bangladesh, artisan bakery Sylhet, chocolate truffle cake Sylhet, engagement cakes Sylhet, order cake online Sylhet"
+    />
+    <meta name="author" content="Sugar & Sylhet — NT Delights (Engineer Bikash Talukder)" />
+    <meta name="publisher" content="Sugar & Sylhet" />
 
-    <!-- Open Graph -->
+    <!-- Crawlers & Search Engine Directives -->
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta
+      name="googlebot"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+    <meta
+      name="bingbot"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+
+    <!-- Local Geotagging & SEO for Sylhet -->
+    <meta name="geo.region" content="BD-54" />
+    <meta name="geo.placename" content="Sylhet, Bangladesh" />
+    <meta name="geo.position" content="24.8949;91.8687" />
+    <meta name="ICBM" content="24.8949, 91.8687" />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Sugar & Sylhet — Artisan Cakes, Made to Order" />
+    <meta property="og:url" content="https://sugarandsylhet.com/" />
+    <meta
+      property="og:title"
+      content="Sugar & Sylhet — Artisan Cakes, Made to Order in Sylhet | NT Delights"
+    />
     <meta
       property="og:description"
-      content="Handcrafted bridal, birthday and anniversary cakes — baked fresh in Sylhet and delivered with care to your doorstep."
+      content="Handcrafted bridal, birthday and anniversary cakes — baked fresh in Sylhet and delivered with care to your doorstep. Order via WhatsApp or follow on Instagram @nt__delights."
     />
-    <meta property="og:image" content="/og-cover.webp" />
-    <meta property="og:site_name" content="Sugar & Sylhet" />
+    <meta property="og:image" content="https://sugarandsylhet.com/og-cover.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Sugar & Sylhet — Artisan Cakes Studio in Sylhet, Bangladesh"
+    />
+    <meta property="og:site_name" content="Sugar & Sylhet — NT Delights" />
+    <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter -->
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Sugar & Sylhet — Artisan Cakes, Made to Order" />
+    <meta name="twitter:url" content="https://sugarandsylhet.com/" />
+    <meta
+      name="twitter:title"
+      content="Sugar & Sylhet — Artisan Cakes, Made to Order in Sylhet | NT Delights"
+    />
     <meta
       name="twitter:description"
-      content="Handcrafted bridal, birthday and anniversary cakes — baked fresh in Sylhet."
+      content="Handcrafted bridal, birthday and anniversary cakes — baked fresh in Sylhet and delivered to your doorstep. Follow @nt__delights."
+    />
+    <meta name="twitter:image" content="https://sugarandsylhet.com/og-cover.webp" />
+    <meta
+      name="twitter:image:alt"
+      content="Sugar & Sylhet — Artisan Cakes Studio in Sylhet, Bangladesh"
     />
 
     <!-- Google Fonts: Cormorant Garamond (serif) + Inter (sans) -->
@@ -38,6 +101,94 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap"
     />
+
+    <!-- Structured Data: Schema.org (Bakery, LocalBusiness, WebSite) for Google Rich Snippets -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": ["Bakery", "FoodEstablishment", "LocalBusiness"],
+            "@id": "https://sugarandsylhet.com/#bakery",
+            "name": "Sugar & Sylhet — Artisan Cake Studio",
+            "alternateName": ["Sugar & Sylhet", "NT Delights", "NT Delights Sylhet"],
+            "url": "https://sugarandsylhet.com/",
+            "logo": "https://sugarandsylhet.com/favicon.svg",
+            "image": "https://sugarandsylhet.com/og-cover.webp",
+            "description": "Handcrafted bridal, birthday, anniversary and festive cakes baked fresh to order and delivered across Sylhet.",
+            "telephone": "+8801926240062",
+            "email": "bikashtalukder040@gmail.com",
+            "priceRange": "৳800 - ৳3500",
+            "currenciesAccepted": "BDT",
+            "paymentAccepted": "Cash on Delivery, bKash, Nagad",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Sylhet",
+              "addressRegion": "Sylhet Division",
+              "addressCountry": "BD"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 24.8949,
+              "longitude": 91.8687
+            },
+            "servesCuisine": [
+              "Bakery",
+              "Artisan Cakes",
+              "Custom Birthday Cakes",
+              "Bridal & Wedding Cakes",
+              "Anniversary Cakes"
+            ],
+            "hasMenu": "https://sugarandsylhet.com/#bridal",
+            "sameAs": [
+              "https://www.instagram.com/nt__delights?bqrl=MWM1ZW5nYW85MG42OQ==",
+              "https://wa.me/8801926240062",
+              "https://www.linkedin.com/in/bikash-talukder-6497633b8/"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://sugarandsylhet.com/#website",
+            "url": "https://sugarandsylhet.com/",
+            "name": "Sugar & Sylhet",
+            "publisher": {
+              "@id": "https://sugarandsylhet.com/#bakery"
+            }
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://sugarandsylhet.com/#collections",
+            "name": "Artisan Cake Collections",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Bridal & Engagement Cakes",
+                "url": "https://sugarandsylhet.com/#bridal"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Birthday Cakes",
+                "url": "https://sugarandsylhet.com/#birthday"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Anniversary Cakes",
+                "url": "https://sugarandsylhet.com/#anniversary"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Festive & Diwali Cakes",
+                "url": "https://sugarandsylhet.com/#diwali"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body class="bg-cream text-ink antialiased">
     <div id="root"></div>

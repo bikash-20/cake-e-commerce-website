@@ -83,18 +83,18 @@ export default function Footer() {
           </div>
           <div className="flex flex-wrap gap-6 md:col-span-4 md:justify-end">
             <a
-              href={BRAND.credit.instagram}
+              href={BRAND.instagram}
               target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-cream/70 hover:text-cream"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-cream/70 hover:text-cream transition-colors"
             >
-              <Instagram size={14} /> Instagram
+              <Instagram size={14} className="text-gold" /> {BRAND.instagramHandle}
             </a>
             <a
               href={BRAND.credit.linkedin}
               target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-cream/70 hover:text-cream"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-cream/70 hover:text-cream transition-colors"
             >
               <Linkedin size={14} /> LinkedIn
             </a>

@@ -1,0 +1,17 @@
+{
+  "name": "Sugar & Sylhet — NT Delights Artisan Cakes",
+  "short_name": "Sugar & Sylhet",
+  "description": "Handcrafted bridal, birthday and anniversary cakes in Sylhet. Delivered fresh with care.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4EFE9",
+  "theme_color": "#7A2331",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -341,6 +341,8 @@ export const BRAND = {
   whatsappDisplay: '01926240062',
   email: 'bikashtalukder040@gmail.com',
   location: 'Sylhet, Bangladesh',
+  instagram: 'https://www.instagram.com/nt__delights?bqrl=MWM1ZW5nYW85MG42OQ==',
+  instagramHandle: '@nt__delights',
   credit: {
     name: 'Engineer Bikash Talukder',
     linkedin: 'https://www.linkedin.com/in/bikash-talukder-6497633b8/',
