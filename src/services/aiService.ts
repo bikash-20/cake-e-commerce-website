@@ -207,13 +207,10 @@ export async function sendChatMessage(messages: ChatMessage[]): Promise<{ reply:
         return { reply: data.reply };
       }
       if (data.requiresKey) {
-        // API key not yet set in Vercel environment variables, use our smart knowledge base + helpful hint
+        // API key not yet set in Vercel environment variables, use our smart knowledge base
         const lastQuery = messages[messages.length - 1]?.content || '';
-        const smartAnswer = generateLocalKnowledgeReply(lastQuery);
         return {
-          reply:
-            smartAnswer +
-            `\n\n*(💡 Setup Note: You can also add your \`OPENROUTER_API_KEY\` in your Vercel Project Settings > Environment Variables to unlock live multi-model generative responses).*`,
+          reply: generateLocalKnowledgeReply(lastQuery),
           isFallback: true,
         };
       }

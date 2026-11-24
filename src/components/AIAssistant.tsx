@@ -358,8 +358,8 @@ export default function AIAssistant() {
                 </button>
               </div>
               <p className="mt-1.5 text-center text-[10px] text-muted">
-                {isBn ? 'ওপেনরাউটার ফ্রি এআই দ্বারা পরিচালিত' : 'Powered by OpenRouter Free AI'} •{' '}
-                <a href={`tel:${OWNER_INFO.phoneE164}`} className="underline">
+                {isBn ? 'সরাসরি অর্ডার ও যোগাযোগের জন্য:' : 'Direct Order & Inquiries:'}{' '}
+                <a href={`tel:${OWNER_INFO.phoneE164}`} className="underline font-medium text-ink hover:text-burgundy">
                   {formatNumber(OWNER_INFO.phone)}
                 </a>
               </p>
