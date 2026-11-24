@@ -63,13 +63,16 @@ export default function CartDrawer() {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className={
               isMobile
-                ? 'fixed inset-x-0 bottom-0 top-16 z-[55] flex flex-col rounded-t-3xl bg-cream shadow-2xl'
+                ? 'fixed inset-x-0 bottom-0 top-12 z-[55] flex flex-col rounded-t-3xl bg-cream shadow-2xl overscroll-contain'
                 : 'fixed right-0 top-0 z-[55] flex h-full w-full max-w-[480px] flex-col bg-cream shadow-2xl'
             }
             aria-label={t('cartTitle')}
           >
+            {/* Mobile drag affordance */}
+            <div className="mx-auto mt-2.5 h-1 w-10 rounded-full bg-divider/80 md:hidden" aria-hidden="true" />
+
             {/* header */}
-            <div className="flex items-center justify-between border-b border-divider px-6 py-5 md:px-8">
+            <div className="flex items-center justify-between border-b border-divider px-5 py-4 sm:px-6 md:px-8">
               <div>
                 <p className="eyebrow">{t('cartTitle')}</p>
                 <h2 className="display text-2xl md:text-3xl">{t('navCart')}</h2>
@@ -85,7 +88,7 @@ export default function CartDrawer() {
             </div>
 
             {/* items */}
-            <div className="flex-1 overflow-y-auto px-6 py-6 md:px-8">
+            <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-6 sm:py-6 md:px-8 overscroll-contain">
               {items.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
                   <p className="font-serif text-3xl text-ink">{t('cartEmptyTitle')}</p>
@@ -235,6 +238,8 @@ export default function CartDrawer() {
                       rows={2}
                       value={note}
                       onChange={(e) => setNote(e.target.value)}
+                      spellCheck={false}
+                      autoCapitalize="sentences"
                       placeholder={
                         isBn
                           ? 'কেকের ওপর কী লেখা হবে অথবা ডেলিভারির কোনো বিশেষ ঠিকানা বা নির্দেশনা থাকলে লিখুন...'
@@ -249,7 +254,7 @@ export default function CartDrawer() {
 
             {/* footer summary */}
             {items.length > 0 && (
-              <div className="border-t border-divider bg-surface/60 px-6 py-6 md:px-8">
+              <div className="border-t border-divider bg-surface/80 px-5 py-5 sm:px-6 sm:py-6 md:px-8 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-lg backdrop-blur">
                 <dl className="mb-4 space-y-2 text-sm">
                   <div className="flex items-center justify-between">
                     <dt className="text-muted">{t('cartSubtotal')}</dt>
@@ -270,7 +275,7 @@ export default function CartDrawer() {
                   href={waLink}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-full bg-burgundy px-6 py-4 text-sm font-medium text-cream transition-colors hover:bg-ink"
+                  className="flex items-center justify-center gap-2 rounded-full bg-burgundy px-6 py-4 text-sm font-medium text-cream transition-all hover:bg-ink active:scale-[0.98] shadow-md"
                 >
                   {t('cartCheckoutWhatsApp')}
                 </a>

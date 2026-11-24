@@ -41,6 +41,7 @@ export default function MagneticButton({
   const sy = useSpring(y, { stiffness: 250, damping: 22, mass: 0.5 });
 
   const onMove = (e: React.PointerEvent<HTMLElement>) => {
+    if (e.pointerType === 'touch') return;
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();

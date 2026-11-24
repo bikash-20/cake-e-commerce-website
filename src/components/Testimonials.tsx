@@ -36,8 +36,8 @@ export default function Testimonials() {
   ].map((c) => c.image);
 
   return (
-    <section className="relative bg-cream py-24 md:py-32">
-      <div className="mx-auto max-w-editorial px-6 md:px-12">
+    <section className="relative bg-cream py-16 sm:py-24 md:py-32">
+      <div className="mx-auto max-w-editorial px-4 sm:px-6 md:px-12">
         <SectionReveal className="grid grid-cols-1 gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <p className="eyebrow">{isBn ? 'সিলেটের প্রিয়' : 'Loved in Sylhet'}</p>

@@ -41,6 +41,7 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
   const imgScale = useTransform(sx, [-10, 10], [1.06, 1.06]);
 
   const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === 'touch') return;
     const el = e.currentTarget;
     const rect = el.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width;
@@ -74,7 +75,7 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
       onPointerLeave={onLeave}
       style={{ perspective: 1000 }}
       className={`group flex flex-col ${
-        variant === 'featured' ? 'w-[88vw] sm:w-[480px]' : 'w-[78vw] sm:w-[340px]'
+        variant === 'featured' ? 'w-[84vw] max-w-[420px] sm:w-[480px]' : 'w-[78vw] max-w-[320px] sm:w-[340px]'
       }`}
       data-cursor="view"
     >
@@ -135,7 +136,7 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
                   key={w.weight}
                   type="button"
                   onClick={() => setWeight(w.weight)}
-                  className={`flex flex-col items-start rounded-xl border px-3 py-2 text-left transition-colors ${
+                  className={`flex min-h-[44px] min-w-[64px] flex-col items-start justify-center rounded-xl border px-3 py-2 text-left transition-all active:scale-95 ${
                     active
                       ? 'border-ink bg-ink text-cream'
                       : 'border-divider bg-cream text-ink hover:border-ink/50'
@@ -169,9 +170,9 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
                 return (
                   <label
                     key={a.id}
-                    className="flex cursor-pointer items-center justify-between gap-2 rounded-lg border border-divider px-3 py-2 text-sm transition-colors hover:border-ink/40"
+                    className="flex min-h-[44px] cursor-pointer items-center justify-between gap-2 rounded-lg border border-divider px-3 py-2.5 text-sm transition-colors hover:border-ink/40 active:bg-surface/50"
                   >
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center gap-2.5">
                       <span
                         className={`flex h-4 w-4 items-center justify-center rounded-sm border transition-colors ${
                           active ? 'border-ink bg-ink text-cream' : 'border-divider bg-cream'
@@ -220,7 +221,7 @@ export default function CakeCard({ cake, variant = 'default' }: Props) {
           <button
             type="button"
             onClick={onAdd}
-            className="flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-cream transition-colors hover:bg-burgundy"
+            className="flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-cream transition-all hover:bg-burgundy active:scale-95 shadow-sm"
             data-cursor="order"
           >
             <Plus size={14} strokeWidth={1.6} />

@@ -36,7 +36,7 @@ export default function CakeCarousel({ cakes }: Props) {
   return (
     <div className="relative">
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex gap-6 pl-6 pr-6 md:pl-12 md:pr-12">
+        <div className="flex gap-4 sm:gap-6 pl-4 pr-4 sm:pl-6 sm:pr-6 md:pl-12 md:pr-12">
           {cakes.map((cake) => (
             <div key={cake.id} className="flex-[0_0_auto]">
               <CakeCard cake={cake} />
@@ -45,12 +45,12 @@ export default function CakeCarousel({ cakes }: Props) {
         </div>
       </div>
 
-      {/* edge fades — subtle, asymmetric */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-cream to-transparent md:w-20" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-cream to-transparent md:w-20" />
+      {/* edge fades — subtle on mobile, elegant on desktop */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-3 sm:w-10 md:w-20 bg-gradient-to-r from-cream to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-3 sm:w-10 md:w-20 bg-gradient-to-l from-cream to-transparent" />
 
       {/* arrow controls */}
-      <div className="mx-6 mt-8 flex items-center justify-between md:mx-12">
+      <div className="mx-4 sm:mx-6 mt-6 sm:mt-8 flex items-center justify-between md:mx-12">
         <p className="eyebrow">{isBn ? 'ড্র্যাগ করে বাকি কেক দেখুন' : 'Drag to explore'}</p>
         <div className="flex gap-2">
           <button

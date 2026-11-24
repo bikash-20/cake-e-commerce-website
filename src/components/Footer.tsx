@@ -9,7 +9,7 @@ export default function Footer() {
 
   return (
     <footer id="contact" className="relative bg-nightfall text-cream">
-      <div className="mx-auto max-w-editorial px-6 py-24 md:px-12 md:py-32">
+      <div className="mx-auto max-w-editorial px-4 py-16 sm:px-6 sm:py-24 md:px-12 md:py-32">
         <SectionReveal className="grid grid-cols-1 gap-12 md:grid-cols-12">
           <div className="md:col-span-7">
             <p className="eyebrow text-cream/55">{t('footerEyebrow')}</p>

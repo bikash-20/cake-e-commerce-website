@@ -28,8 +28,8 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="relative bg-surface py-24 scroll-mt-24 md:py-32">
-      <div className="mx-auto max-w-editorial px-6 md:px-12">
+    <section id="how-it-works" className="relative bg-surface py-16 scroll-mt-20 sm:py-24 md:py-32">
+      <div className="mx-auto max-w-editorial px-4 sm:px-6 md:px-12">
         <SectionReveal className="grid grid-cols-1 gap-6 md:grid-cols-12">
           <div className="md:col-span-4">
             <p className="eyebrow">{t('howEyebrow')}</p>

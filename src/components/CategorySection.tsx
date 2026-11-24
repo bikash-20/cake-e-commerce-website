@@ -28,9 +28,9 @@ export default function CategorySection({
   const { formatNumber } = useLanguage();
 
   return (
-    <section id={id} className="relative scroll-mt-24 py-20 md:py-32">
-      <div className="mx-auto max-w-editorial px-6 md:px-12">
-        <SectionReveal className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+    <section id={id} className="relative scroll-mt-20 py-14 sm:py-20 md:py-32">
+      <div className="mx-auto max-w-editorial px-4 sm:px-6 md:px-12">
+        <SectionReveal className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-12 md:gap-12">
           {/* Index column */}
           <div className={`md:col-span-2 ${align === 'right' ? 'md:order-3' : ''}`}>
             <div className="flex items-center gap-3">

@@ -7,8 +7,8 @@ export default function DeliveryPricing() {
   const { t, isBn, formatPrice } = useLanguage();
 
   return (
-    <section id="delivery" className="relative bg-nightfall py-24 text-cream md:py-32">
-      <div className="mx-auto max-w-editorial px-6 md:px-12">
+    <section id="delivery" className="relative bg-nightfall py-16 text-cream sm:py-24 md:py-32">
+      <div className="mx-auto max-w-editorial px-4 sm:px-6 md:px-12">
         <SectionReveal className="grid grid-cols-1 gap-10 md:grid-cols-12">
           <div className="md:col-span-6">
             <p className="eyebrow text-cream/60">{t('deliveryEyebrow')}</p>

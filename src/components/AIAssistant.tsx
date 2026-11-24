@@ -174,12 +174,12 @@ export default function AIAssistant() {
             aria-label="Open AI Cake Assistant"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group fixed bottom-20 right-5 z-30 flex items-center gap-2 rounded-full border border-gold/40 bg-nightfall px-4 py-3 text-sm font-medium text-cream shadow-[0_16px_36px_-12px_rgba(33,29,25,0.45)] backdrop-blur transition-all duration-300 hover:border-gold hover:shadow-[0_20px_40px_-10px_rgba(184,147,76,0.4)] sm:bottom-20 sm:right-6"
+            className="group fixed bottom-[calc(max(1.25rem,env(safe-area-inset-bottom))+52px)] right-4 z-30 flex items-center gap-2 rounded-full border border-gold/40 bg-nightfall px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm font-medium text-cream shadow-[0_16px_36px_-12px_rgba(33,29,25,0.45)] backdrop-blur transition-all duration-300 hover:border-gold hover:shadow-[0_20px_40px_-10px_rgba(184,147,76,0.4)] sm:bottom-[calc(1.5rem+64px)] sm:right-6"
           >
-            <span className="relative flex h-6 w-6 items-center justify-center rounded-full bg-gold/20 text-gold">
-              <Sparkles size={14} className="animate-pulse text-gold" />
+            <span className="relative flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-gold/20 text-gold">
+              <Sparkles size={13} className="animate-pulse text-gold sm:size-[14px]" />
             </span>
-            <span className="font-serif text-[13px] tracking-wide text-cream">
+            <span className="font-serif text-xs sm:text-[13px] tracking-wide text-cream">
               {isBn ? 'এআই কেক কনসিয়ার্জ' : 'Ask AI Concierge'}
             </span>
             <span className="flex h-2 w-2 rounded-full bg-emerald-400 ring-4 ring-emerald-400/20" />
@@ -187,21 +187,36 @@ export default function AIAssistant() {
         )}
       </AnimatePresence>
 
-      {/* Floating Chat Modal / Drawer */}
+      {/* Floating Chat Modal / Mobile Bottom Sheet */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.94, y: 20 }}
-            transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-            className="fixed bottom-5 right-4 z-50 flex h-[580px] max-h-[85vh] w-[min(calc(100vw-2rem),380px)] flex-col overflow-hidden rounded-2xl border border-divider/90 bg-cream/95 text-ink shadow-[0_25px_60px_-15px_rgba(33,29,25,0.4)] backdrop-blur-xl sm:bottom-6 sm:right-6"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="ai-concierge-title"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-divider/70 bg-surface/80 px-4 py-3.5">
+          <>
+            {/* Backdrop overlay on mobile */}
+            <motion.div
+              key="ai-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 z-40 bg-nightfall/40 backdrop-blur-xs sm:hidden"
+              aria-hidden="true"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 20 }}
+              transition={{ type: 'spring', damping: 28, stiffness: 350 }}
+              className="fixed inset-x-0 bottom-0 top-auto z-50 flex h-[85svh] max-h-[85svh] w-full flex-col overflow-hidden rounded-t-3xl border-t border-divider/90 bg-cream/98 text-ink shadow-[0_25px_60px_-15px_rgba(33,29,25,0.4)] backdrop-blur-xl sm:inset-auto sm:bottom-6 sm:right-6 sm:h-[580px] sm:max-h-[85vh] sm:w-[380px] sm:rounded-2xl sm:border overscroll-contain"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="ai-concierge-title"
+            >
+              {/* Mobile drag affordance */}
+              <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-divider/80 sm:hidden" aria-hidden="true" />
+
+              {/* Header */}
+              <div className="flex items-center justify-between border-b border-divider/70 bg-surface/80 px-4 py-3 sm:py-3.5">
               <div className="flex items-center gap-2.5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-burgundy text-cream shadow-xs">
                   <Bot size={18} />
@@ -263,7 +278,7 @@ export default function AIAssistant() {
             </div>
 
             {/* Messages Scroll Area */}
-            <div className="flex-1 space-y-3.5 overflow-y-auto px-4 py-4 text-xs">
+            <div className="flex-1 space-y-3.5 overflow-y-auto px-4 py-4 text-xs overscroll-contain">
               {messages.map((m) => (
                 <div
                   key={m.id}
@@ -315,7 +330,7 @@ export default function AIAssistant() {
                 e.preventDefault();
                 handleSend();
               }}
-              className="border-t border-divider/70 bg-surface/80 p-3"
+              className="border-t border-divider/70 bg-surface/80 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
             >
               <div className="relative flex items-center">
                 <input
@@ -323,6 +338,8 @@ export default function AIAssistant() {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
+                  enterKeyHint="send"
+                  autoCapitalize="sentences"
                   placeholder={
                     isBn
                       ? 'কেক, ফ্লেভার, ডেলিভারি বা দাম সম্পর্কে জিজ্ঞাসা করুন...'
@@ -335,7 +352,7 @@ export default function AIAssistant() {
                   type="submit"
                   disabled={!input.trim() || loading}
                   aria-label="Send message"
-                  className="absolute right-1.5 flex h-7 w-7 items-center justify-center rounded-lg bg-burgundy text-cream transition-opacity disabled:opacity-30 hover:bg-burgundy/90"
+                  className="absolute right-1.5 flex h-7 w-7 items-center justify-center rounded-lg bg-burgundy text-cream transition-opacity disabled:opacity-30 hover:bg-burgundy/90 active:scale-95"
                 >
                   <Send size={13} />
                 </button>
@@ -348,6 +365,7 @@ export default function AIAssistant() {
               </p>
             </form>
           </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

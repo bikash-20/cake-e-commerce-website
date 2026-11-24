@@ -3,6 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      screens: {
+        xs: '420px',
+      },
       colors: {
         cream: '#F4EFE9',
         ink: '#2A2622',

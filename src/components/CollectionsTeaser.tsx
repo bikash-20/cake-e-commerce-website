@@ -48,7 +48,7 @@ export default function CollectionsTeaser() {
       aria-labelledby="collections-heading"
       className="relative bg-cream py-16 md:py-24"
     >
-      <div className="mx-auto max-w-editorial px-6 md:px-12">
+      <div className="mx-auto max-w-editorial px-4 sm:px-6 md:px-12">
         <div className="mb-10 flex flex-col items-start gap-3 md:mb-14 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow text-burgundy">{isBn ? 'কালেকশন' : 'Collections'}</p>

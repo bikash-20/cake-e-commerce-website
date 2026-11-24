@@ -58,12 +58,12 @@ export default function Hero() {
       />
 
       {/* Centered editorial copy */}
-      <div className="relative z-10 mx-auto flex w-full max-w-editorial flex-1 flex-col items-center justify-center px-6 pb-32 pt-32 text-center md:px-12 md:pb-40 md:pt-44 lg:pb-48 lg:pt-52">
+      <div className="relative z-10 mx-auto flex w-full max-w-editorial flex-1 flex-col items-center justify-center px-4 pb-24 pt-28 text-center sm:px-6 md:px-12 md:pb-40 md:pt-44 lg:pb-48 lg:pt-52">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="text-[11px] uppercase tracking-eyebrow text-cream/80"
+          className="text-[10px] sm:text-[11px] uppercase tracking-eyebrow text-cream/80"
         >
           {t('heroEyebrow')}
         </motion.p>
@@ -72,7 +72,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.0, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="display mx-auto mt-10 max-w-4xl text-balance font-serif text-[44px] leading-[1.08] tracking-[-0.01em] text-cream sm:text-[64px] sm:leading-[1.06] md:mt-14 md:text-[88px] md:leading-[1.05] md:tracking-[-0.015em] lg:text-[104px] lg:leading-[1.04]"
+          className="display mx-auto mt-6 sm:mt-10 md:mt-14 max-w-4xl text-balance font-serif text-[32px] xs:text-[40px] sm:text-[60px] md:text-[84px] lg:text-[104px] leading-[1.08] tracking-[-0.01em] text-cream"
         >
           {t('heroHeadingLine1')}{' '}
           <span className="italic-accent text-[#E89AAA] [text-shadow:_0_1px_18px_rgba(232,154,170,0.35)]">
@@ -85,7 +85,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-12 max-w-xl text-base leading-[1.7] text-cream/85 md:mt-16 md:text-lg md:leading-[1.75]"
+          className="mx-auto mt-6 sm:mt-12 md:mt-16 max-w-xl text-sm sm:text-base md:text-lg leading-[1.7] md:leading-[1.75] text-cream/85 px-2"
         >
           {t('heroSubheading')}
         </motion.p>
@@ -94,12 +94,12 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-14 flex w-full max-w-sm flex-col items-stretch justify-center gap-4 sm:max-w-none sm:w-auto sm:flex-row sm:items-center sm:gap-5 md:mt-20"
+          className="mt-8 sm:mt-14 md:mt-20 flex w-full max-w-sm flex-col items-stretch justify-center gap-3 sm:max-w-none sm:w-auto sm:flex-row sm:items-center sm:gap-5"
         >
           <MagneticButton
             asLink
             href="#bridal"
-            className="items-center justify-center gap-2 rounded-full bg-cream px-9 py-[18px] text-[13px] font-medium uppercase tracking-[0.14em] text-ink transition-colors hover:bg-gold hover:text-cream"
+            className="items-center justify-center gap-2 rounded-full bg-cream px-7 py-3.5 sm:px-9 sm:py-[18px] text-xs sm:text-[13px] font-medium uppercase tracking-[0.14em] text-ink transition-colors hover:bg-gold hover:text-cream shadow-md"
           >
             {t('heroExploreMenu')} <span aria-hidden>→</span>
           </MagneticButton>
@@ -108,7 +108,7 @@ export default function Hero() {
             href={`https://wa.me/${BRAND.whatsappE164}`}
             target="_blank"
             rel="noreferrer"
-            className="items-center justify-center gap-2 rounded-full border border-cream/40 px-9 py-[18px] text-[13px] font-medium uppercase tracking-[0.14em] text-cream transition-colors hover:border-cream hover:bg-cream/10"
+            className="items-center justify-center gap-2 rounded-full border border-cream/40 px-7 py-3.5 sm:px-9 sm:py-[18px] text-xs sm:text-[13px] font-medium uppercase tracking-[0.14em] text-cream transition-colors hover:border-cream hover:bg-cream/10"
           >
             {t('heroChatWhatsApp')}
           </MagneticButton>
